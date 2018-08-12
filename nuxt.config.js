@@ -69,5 +69,9 @@ module.exports = {
         })
       }
     }
-  }
+  },
+  /*
+  ** ENV variables
+  */
+  env: {}
 }

@@ -29,7 +29,7 @@ export default {
     } else {
       this.contentHeight += (windowHeight - 64) + 'px;';
     }
-  }
+  },
 };
 </script>
 

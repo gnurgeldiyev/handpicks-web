@@ -43,7 +43,7 @@ export default {
         },
         {
           url: 'http://refikanadol.com/works/archive-dreaming/',
-          title: 'Archive Dreaming',
+          title: 'Archive Dreaming | Morphogenesis - Extended 8K Panorama | Audiovisual Installation',
           description: 'Commissioned to work with SALT Research collections, artist Refik Anadol employed machine learning algorithms to search and sort relations among 1,700,000 documents. Interactions of the multidimensional data found in the archives are, in turn, translated into an immersive media installation.Commissioned to work with SALT Research collections, artist Refik Anadol employed machine learning algorithms to search and sort relations among 1,700,000 documents. Interactions of the multidimensional data found in the archives are, in turn, translated into an immersive media installation.',
           thumbnail: 'http://refikanadol.com/wp-content/uploads/2018/03/009-2400x1350.jpg',
           hostname: 'refikanadol.com'

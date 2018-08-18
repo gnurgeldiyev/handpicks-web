@@ -234,7 +234,7 @@
   .card_dialog {
     width: 80%;
     max-width: 640px;
-    margin: 8vh auto 0 auto !important;
+    margin: 6vh auto 0 auto !important;
   }
   .card_dialog_thumbnail {
     width: 100%;

@@ -7,7 +7,7 @@
         made with 
         <img 
           class="f_item_icon"
-          src="icon-heart.svg" 
+          src="/icon-heart.svg" 
           alt="heart icon">
       </div>
       <div class="f_item">
@@ -15,7 +15,7 @@
         <a href="#">
           <img 
             class="f_item_icon"
-            src="logo-apple.svg" 
+            src="/logo-apple.svg" 
             alt="apple brand logo">
         </a>
       </div>
@@ -24,13 +24,13 @@
         <a href="#">
           <img 
             class="f_item_icon"
-            src="logo-twitter.svg" 
+            src="/logo-twitter.svg" 
             alt="twitter brand logo">
         </a>
         <a href="#">
           <img 
             class="f_item_icon"
-            src="logo-instagram.svg" 
+            src="/logo-instagram.svg" 
             alt="instagram brand logo">
         </a>
       </div>

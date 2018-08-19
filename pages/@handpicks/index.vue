@@ -9,7 +9,3 @@
     layout: 'admin'
   }
 </script>
-
-<style scoped>
-
-</style>

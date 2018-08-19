@@ -3,7 +3,7 @@
     <el-col :span="8">
       <div>
         <nuxt-link 
-          to="/@handpicks-editor" 
+          to="/@handpicks" 
           class="a-header__logo">
           handpicks
         </nuxt-link>

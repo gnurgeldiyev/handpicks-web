@@ -4,13 +4,11 @@
       <admin-header />
     </el-header> 
     <el-main>
-      <el-row>
+      <el-row :gutter="16">
         <el-col :span="4">
           <admin-menu />
         </el-col>
-        <el-col
-          :span="18"
-          :offset="1">
+        <el-col :span="20">
           <nuxt/>
         </el-col>
       </el-row>
@@ -50,7 +48,7 @@ html {
   box-sizing: border-box;
 }
 .page_title {
-  margin: 10px 20px;
+  margin: 8px 16px;
   color: #666666;
 }
 </style>

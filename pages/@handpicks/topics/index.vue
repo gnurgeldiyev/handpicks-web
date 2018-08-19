@@ -1,15 +1,18 @@
 <template>
   <div>
+    <add-topic-form />
     <topic-list :topics="topics" />
   </div>
 </template>
 
 <script>
 import TopicList from '@/components/Admin/TopicList';
+import AddTopicForm from '@/components/Admin/AddTopicForm';
 
   export default {
     layout: 'admin',
     components: {
+      'add-topic-form': AddTopicForm,
       'topic-list': TopicList,
     },
     data() {
@@ -38,7 +41,3 @@ import TopicList from '@/components/Admin/TopicList';
     }
   }
 </script>
-
-<style scoped>
-
-</style>

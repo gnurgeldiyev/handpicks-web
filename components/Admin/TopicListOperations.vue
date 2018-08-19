@@ -79,9 +79,9 @@
             }
             console.log(topic);
             this.$refs[formName].resetFields();
-            this.addTopicDialogVisible = false;
+            this.editTopicDialogVisible = false;
             this.$message({
-              message: 'Topic added.',
+              message: 'Topic updated.',
               type: 'success'
             });
           } else {
@@ -91,7 +91,7 @@
       },
       cancelForm(formName) {
         this.$refs[formName].resetFields();
-        this.addTopicDialogVisible = false;
+        this.editTopicDialogVisible = false;
       },
       deleteTopicAlert(id) {
         this.$confirm('This will permanently delete the topic. Continue?', 'Warning', {

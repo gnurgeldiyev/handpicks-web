@@ -37,7 +37,7 @@
     </el-menu-item>
     <el-menu-item
       index="5"
-      @click="goTo('/@handpicks/api-clients')">
+      @click="goTo('/@handpicks/clients')">
       <span>API Clients</span>
     </el-menu-item>
   </el-menu>

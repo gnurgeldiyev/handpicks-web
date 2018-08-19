@@ -1,7 +1,7 @@
 <template>
   <el-row>
     <el-button 
-      class="card__body__actions__edit"
+      class="card_body_operations_edit"
       type="text"
       icon="el-icon-edit"
       @click="editPostDialogVisible = true"/>
@@ -61,7 +61,7 @@
     </el-dialog>
     <el-popover
       v-model="deletePopoverVisible"
-      :popper-class="'card__deletePopover'"
+      :popper-class="'card_deletePopover'"
       placement="top-end"
       width="220">
       <p>Are you sure to delete this?</p>
@@ -81,7 +81,7 @@
       </div>
       <el-button 
         slot="reference"
-        class="card__body__actions__delete"
+        class="card_body_operations_delete"
         type="text" 
         icon="el-icon-delete"/>
     </el-popover>
@@ -129,7 +129,7 @@
           summary: [
             { required: true, message: 'Please enter a summary', trigger: 'blur' },
             { min: 300, message: 'Length should be min 250 characters', trigger: 'blur' },
-            { max: 500, message: 'Length should be min 500 characters', trigger: 'blur' }
+            { max: 500, message: 'Length should be max 500 characters', trigger: 'blur' }
           ],
           topic: [
             { required: true, message: 'Please select a post topic', trigger: 'change' },

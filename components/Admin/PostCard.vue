@@ -1,18 +1,18 @@
 <template>
   <el-card class="card">
     <div 
-      class="card__head"
+      class="card_head"
       @click="cardDialogVisible = true">
       <img 
         :src="post.thumbnail" 
-        class="card__head__img">
-      <span class="card__head__date">
+        class="card_head_img">
+      <span class="card_head_date">
         {{ post.created }}
       </span>
     </div>
-    <div class="card__body">
+    <div class="card_body">
       <h4 
-        class="card__body__title"
+        class="card_body_title"
         @click="cardDialogVisible = true">{{ post.title }}</h4>
       <span class="card_owner">
         {{ post.owner }}
@@ -24,8 +24,8 @@
         {{ post.hostname }}
       </span>
     </div>
-    <div class="card__body__actions">
-      <post-card-actions :post="post" />
+    <div class="card_body_operations">
+      <post-card-operations :post="post" />
     </div>
 
     <el-dialog
@@ -58,11 +58,11 @@
 </template>
 
 <script>
-import PostCardActions from '@/components/Admin/PostCardActions';
+import PostCardOperations from '@/components/Admin/PostCardOperations';
 
   export default {
     components: {
-      'post-card-actions': PostCardActions
+      'post-card-operations': PostCardOperations
     },
     props: {
       post: {
@@ -88,13 +88,13 @@ import PostCardActions from '@/components/Admin/PostCardActions';
   .card .el-card__body {
     padding: 0 !important;
   }
-  .card__head {
+  .card_head {
     position: relative;
   }
-  .card__head:hover {
+  .card_head:hover {
     cursor: pointer;
   }
-  .card__head__date {
+  .card_head_date {
     position: absolute;
     color: #323232;
     font-size: 0.9rem;
@@ -105,22 +105,22 @@ import PostCardActions from '@/components/Admin/PostCardActions';
     top: 8px;
     left: 8px;
   }
-  .card__head__img {
+  .card_head_img {
     min-width: 320px;
     width: 100%;
     height: 240px;
     object-fit: cover;
   }
-  .card__body {
+  .card_body {
     padding: 15px;
   }
-  .card__body__title {
+  .card_body_title {
     color: #323232;
     font-size: 1.1rem;
     font-weight: bolder;
     margin-bottom: 16px;
   }
-  .card__body__title:hover {
+  .card_body_title:hover {
     cursor: pointer;
   }
   .card_owner {
@@ -142,28 +142,28 @@ import PostCardActions from '@/components/Admin/PostCardActions';
     line-height: 1;
     font-weight: 700;
   }
-  .card__body__text {
+  .card_body_text {
     color: #323232;
     font-size: 0.8rem;
     line-height: 1.3rem;
     font-weight: lighter;
     margin: 16px 0 4px 0;
   }
-  .card__body__actions {
+  .card_body_operations {
     float: right;
     margin: 16px 16px 4px 16px;
   }
-  .card__body__actions__edit {
+  .card_body_operations_edit {
     color: #909399;
     font-size: 1.4rem;
     margin-left: 5px;
   }
-  .card__body__actions__delete {
+  .card_body_operations_delete {
     color: #F56C6C;
     font-size: 1.4rem;
     margin-left: 5px;
   }
-  .card__deletePopover {
+  .card_deletePopover {
     box-shadow: 0 4px 8px rgba(0,0,0,0.2), 0 4px 8px rgba(0,0,0,0.2);
   }
   .card_dialog {

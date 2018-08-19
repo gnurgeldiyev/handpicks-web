@@ -107,7 +107,7 @@
           summary: [
             { required: true, message: 'Please enter a summary', trigger: 'blur' },
             { min: 300, message: 'Length should be min 250 characters', trigger: 'blur' },
-            { max: 500, message: 'Length should be min 500 characters', trigger: 'blur' }
+            { max: 500, message: 'Length should be max 500 characters', trigger: 'blur' }
           ],
           topic: [
             { required: true, message: 'Please select a post topic', trigger: 'change' },

@@ -18,7 +18,7 @@
         <li class="a-header__menu__item a-header__menu__item--active">
           <el-dropdown trigger="click">
             <span class="el-dropdown-link">
-              Dropdown List<i class="el-icon-arrow-down el-icon--right"/>
+              Guvanch<i class="el-icon-arrow-down el-icon--right"/>
             </span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item>Action 1</el-dropdown-item>

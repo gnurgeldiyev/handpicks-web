@@ -22,22 +22,22 @@
     </el-submenu>
     <el-menu-item
       index="2"
-      @click="goTo('#')">
+      @click="goTo('/@handpicks/topics')">
       <span>Topics</span>
     </el-menu-item>
     <el-menu-item
       index="3"
-      @click="goTo('#')">
+      @click="goTo('/@handpicks/users')">
       <span>Users</span>
     </el-menu-item>
     <el-menu-item
       index="4"
-      @click="goTo('#')">
+      @click="goTo('/@handpicks/managers')">
       <span>Managers</span>
     </el-menu-item>
     <el-menu-item
       index="5"
-      @click="goTo('#')">
+      @click="goTo('/@handpicks/api-clients')">
       <span>API Clients</span>
     </el-menu-item>
   </el-menu>

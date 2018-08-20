@@ -48,7 +48,7 @@ html {
   box-sizing: border-box;
 }
 .page_title {
-  margin: 8px 16px;
+  margin: 16px;
   color: #666666;
 }
 </style>

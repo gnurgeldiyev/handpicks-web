@@ -1,7 +1,7 @@
 <template>
   <el-row>
     <el-button 
-      class="card_body_operations_edit"
+      class="a_card_body_operations_edit"
       type="text"
       icon="el-icon-edit"
       @click="editPostDialogVisible = true"/>
@@ -61,7 +61,7 @@
     </el-dialog>
     <el-popover
       v-model="deletePopoverVisible"
-      :popper-class="'card_deletePopover'"
+      :popper-class="'a_card_deletePopover'"
       placement="top-end"
       width="220">
       <p>Are you sure to delete this?</p>
@@ -81,7 +81,7 @@
       </div>
       <el-button 
         slot="reference"
-        class="card_body_operations_delete"
+        class="a_card_body_operations_delete"
         type="text" 
         icon="el-icon-delete"/>
     </el-popover>
@@ -187,30 +187,5 @@
 }
 .floating-button:hover {
   box-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 1px 3px rgba(0,0,0,0.2);
-}
-.image_upload {
-  clear: both;
-}
-.story-form-dialog {
-  margin: 0 !important;
-  width: 100%;
-  min-height: 100vh;
-  border-radius: 0;
-}
-.story-form-dialog .el-icon {
-  font-size: 2rem;
-}
-.story-form {
-  width: 90%;
-  max-width: 960px;
-  margin: 0 auto;
-}
-.story-form-title {
-  margin-bottom: 16px;
-}
-.story-form .ql-editor {
-  min-height: 40vh;
-  color: initial;
-  font-size: initial;
 }
 </style>

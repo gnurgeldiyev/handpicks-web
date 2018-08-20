@@ -1,51 +1,51 @@
 <template>
-  <el-card class="card">
+  <el-card class="a_card">
     <div 
-      class="card_head"
+      class="a_card_head"
       @click="cardDialogVisible = true">
       <img 
         :src="post.thumbnail" 
-        class="card_head_img">
-      <span class="card_head_date">
+        class="a_card_head_img">
+      <span class="a_card_head_date">
         {{ post.created }}
       </span>
     </div>
-    <div class="card_body">
+    <div class="a_card_body">
       <h4 
-        class="card_body_title"
+        class="a_card_body_title"
         @click="cardDialogVisible = true">{{ post.title }}</h4>
-      <span class="card_owner">
+      <span class="a_card_owner">
         {{ post.owner }}
       </span>
-      <span class="card_seperator">
+      <span class="a_card_seperator">
         •
       </span>
-      <span class="card_hostname">
+      <span class="a_card_hostname">
         {{ post.hostname }}
       </span>
     </div>
-    <div class="card_body_operations">
+    <div class="a_card_body_operations">
       <post-card-operations :post="post" />
     </div>
 
     <el-dialog
       :visible.sync="cardDialogVisible"
       :lock-scroll="true"
-      :custom-class="'card_dialog'">
+      :custom-class="'a_card_dialog'">
       <img 
         :src="post.thumbnail" 
         :alt="post.title"
-        class="card_dialog_thumbnail">
-      <h2 class="card_dialog_title">
+        class="a_card_dialog_thumbnail">
+      <h2 class="a_card_dialog_title">
         {{ post.title }}
       </h2>
-      <span class="card_dialog_note">
+      <span class="a_card_dialog_note">
         {{ post.owner }}'s note
       </span>
-      <p class="card_dialog_description">
+      <p class="a_card_dialog_description">
         {{ post.summary }}
       </p>
-      <div class="card_dialog_action">
+      <div class="a_card_dialog_action">
         <el-button 
           type="primary"
           round
@@ -79,22 +79,22 @@ import PostCardOperations from '@/components/Admin/PostCardOperations';
 </script>
 
 <style>
-  .card {
+  .a_card {
     width: 320px;
     height: auto;
     display: inline-flex;
     margin: 16px;
   }
-  .card .el-card__body {
+  .a_card .el-card__body {
     padding: 0 !important;
   }
-  .card_head {
+  .a_card_head {
     position: relative;
   }
-  .card_head:hover {
+  .a_card_head:hover {
     cursor: pointer;
   }
-  .card_head_date {
+  .a_card_head_date {
     position: absolute;
     color: #323232;
     font-size: 0.9rem;
@@ -105,79 +105,79 @@ import PostCardOperations from '@/components/Admin/PostCardOperations';
     top: 8px;
     left: 8px;
   }
-  .card_head_img {
+  .a_card_head_img {
     min-width: 320px;
     width: 100%;
     height: 240px;
     object-fit: cover;
   }
-  .card_body {
+  .a_card_body {
     padding: 15px;
   }
-  .card_body_title {
+  .a_card_body_title {
     color: #323232;
     font-size: 1.1rem;
     font-weight: bolder;
     margin-bottom: 16px;
   }
-  .card_body_title:hover {
+  .a_card_body_title:hover {
     cursor: pointer;
   }
-  .card_owner {
+  .a_card_owner {
     color: #323232;
     font-size: 0.8rem;
     line-height: 1;
     font-weight: 700;
   }
-  .card_hostname {
+  .a_card_hostname {
     color: #323232;
     font-size: 0.8rem;
     line-height: 1;
     font-weight: 400;
   }
-  .card_seperator {
+  .a_card_seperator {
     margin: 0 4px;
     color: #323232;
     font-size: 0.8rem;
     line-height: 1;
     font-weight: 700;
   }
-  .card_body_text {
+  .a_card_body_text {
     color: #323232;
     font-size: 0.8rem;
     line-height: 1.3rem;
     font-weight: lighter;
     margin: 16px 0 4px 0;
   }
-  .card_body_operations {
+  .a_card_body_operations {
     float: right;
     margin: 16px 16px 4px 16px;
   }
-  .card_body_operations_edit {
+  .a_card_body_operations_edit {
     color: #909399;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     margin-left: 5px;
   }
-  .card_body_operations_delete {
+  .a_card_body_operations_delete {
     color: #F56C6C;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     margin-left: 5px;
   }
-  .card_deletePopover {
+  .a_card_deletePopover {
     box-shadow: 0 4px 8px rgba(0,0,0,0.2), 0 4px 8px rgba(0,0,0,0.2);
   }
-  .card_dialog {
+  .a_card_dialog {
     width: 80%;
     max-width: 640px;
     margin: 6vh auto 0 auto !important;
   }
-  .card_dialog_thumbnail {
+  .a_card_dialog_thumbnail {
     width: 100%;
     height: 300px;
     border-radius: 2px;
     object-fit: cover;
   }
-  .card_dialog_title {
+  .a_card_dialog_title {
     color: #000001;
     font-size: 1.6rem;
     line-height: 1.5;
@@ -185,20 +185,20 @@ import PostCardOperations from '@/components/Admin/PostCardOperations';
     text-align: center;
     margin: 16px 0;
   }
-  .card_dialog_note {
+  .a_card_dialog_note {
     color: #666666;
     font-size: 0.8rem;
     line-height: 1.5;
     font-weight: 700;
   }
-  .card_dialog_description {
+  .a_card_dialog_description {
     color: #000001;
     font-size: 1.1rem;
     line-height: 1.5;
     font-weight: 300;
     margin: 8px 0 0 0;
   }
-  .card_dialog_action {
+  .a_card_dialog_action {
     margin: 32px 0 0 0;
     text-align: center;
   }

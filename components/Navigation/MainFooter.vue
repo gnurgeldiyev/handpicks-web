@@ -8,7 +8,8 @@
         <img 
           class="f_item_icon"
           src="/icon-heart.svg" 
-          alt="heart icon">
+          alt="heart icon"
+          @click="sendFeedbackDialogVisible = true">
       </div>
       <div class="f_item">
         download on the 
@@ -35,6 +36,42 @@
         </a>
       </div>
     </div>
+    <el-dialog
+      :lock-scroll="true"
+      :top="'8vh'"
+      :visible.sync="sendFeedbackDialogVisible"
+      width="35%"
+      title="👋 Say hello or send a feedback">
+      <el-form 
+        ref="feedback" 
+        :model="feedback"
+        :rules="rules">
+        <el-form-item 
+          prop="name"
+          label="Name">
+          <el-input v-model="feedback.name"/>
+        </el-form-item>
+        <el-form-item 
+          prop="email"
+          label="Email">
+          <el-input v-model="feedback.email"/>
+        </el-form-item>
+        <el-form-item 
+          prop="message"
+          label="Message">
+          <el-input
+            :rows="4"
+            v-model="feedback.message"
+            type="textarea"/>
+        </el-form-item>
+        <el-form-item>
+          <el-button 
+            style="width:100%;"
+            type="primary" 
+            @click="submitForm('feedback')">Send</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
@@ -46,6 +83,51 @@
         required: true
       } 
     },
+    data() {
+      return {
+        feedback: {
+          name: '',
+          email: '',
+          message: '',
+        },
+        sendFeedbackDialogVisible: false,
+        rules: {
+          name: [
+            { required: true, message: 'Please enter a your name', trigger: 'blur' },
+          ],
+          message: [
+            { required: true, message: 'Please enter a your message', trigger: 'blur' },
+          ],
+        },
+      }
+    },
+    methods: {
+      submitForm(formName) {
+        this.$refs[formName].validate( (valid) => {
+          if (valid) {     
+
+            let feedback = {
+              name: this.feedback.name,
+              email: this.feedback.email ? this.feedback.email : null,
+              message: this.feedback.message, 
+            }
+            console.log(feedback);
+            this.$refs[formName].resetFields();
+            this.sendFeedbackDialogVisible = false;
+            this.$message({
+              message: 'Thank you for your feedback 😊',
+              type: 'success'
+            });
+          } else {
+            return false;
+          }
+        });
+      },
+      cancelForm(formName) {
+        this.$refs[formName].resetFields();
+        this.sendFeedbackDialogVisible = false;
+      },
+    }
   }
 </script>
 
@@ -65,7 +147,8 @@
     color: #666666;
   }
   .f_item a:hover,
-  .f_item a:hover .f_item_icon {
+  .f_item a:hover .f_item_icon,
+  .f_item_icon:hover {
     text-decoration: none;
     cursor: pointer;
   }
@@ -97,7 +180,8 @@
     color: #666666;
   }
   .f_item a:hover,
-  .f_item a:hover .f_item_icon {
+  .f_item a:hover .f_item_icon,
+  .f_item_icon:hover {
     text-decoration: none;
     cursor: pointer;
   }
@@ -129,7 +213,8 @@
     color: #666666;
   }
   .f_item a:hover,
-  .f_item a:hover .f_item_icon {
+  .f_item a:hover .f_item_icon,
+  .f_item_icon:hover {
     text-decoration: none;
     cursor: pointer;
   }

@@ -13,7 +13,7 @@
     <el-col :span="16">
       <ul class="a-header__menu">
         <li class="a-header__menu__item a-header__menu__item--default">
-          <nuxt-link to="#">Home</nuxt-link>
+          <nuxt-link to="/">handpicks.co</nuxt-link>
         </li>
         <li class="a-header__menu__item a-header__menu__item--active">
           <el-dropdown trigger="click">

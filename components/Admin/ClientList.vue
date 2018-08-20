@@ -24,10 +24,12 @@
             placement="bottom"
             width="400"
             trigger="click">
-            <span style="overflow-wrap: break-word;">
-              {{ scope.row.apiKey }}
+            <span style="word-break: break-all;">
+              {{ getRequestHeader(scope.row.name, scope.row.apiKey) }}
             </span>
-            <el-button slot="reference">Show</el-button>
+            <el-button 
+              slot="reference"
+              size="small">Show</el-button>
           </el-popover>
         </template>
       </el-table-column>
@@ -42,7 +44,7 @@
       <el-table-column
         label="Operations">
         <template slot-scope="scope">
-          <topic-list-operations :topic="scope.row"/>
+          <client-list-operations :client="scope.row"/>
         </template>
       </el-table-column>
     </el-table>
@@ -50,11 +52,11 @@
 </template>
 
 <script>
-import TopicListOperations from '@/components/Admin/TopicListOperations';
+import ClientListOperations from '@/components/Admin/ClientListOperations';
 
   export default {
     components: {
-      'topic-list-operations': TopicListOperations,
+      'client-list-operations': ClientListOperations,
     },
     props: {
       clients: {
@@ -68,15 +70,10 @@ import TopicListOperations from '@/components/Admin/TopicListOperations';
         const month = new Date(date).getMonth() + 1;
         const year = new Date(date).getFullYear();
         return day + '.' + month + '.' + year;
+      },
+      getRequestHeader(name, apiKey) {
+        return `name=${name}, apiKey=${apiKey}`;
       }
     }
   }
 </script>
-<style scoped>
-.popover {
-  display: inline-block;
-  overflow-wrap: break-word;
-  word-break: break-all;
-  white-space: normal;
-}
-</style>

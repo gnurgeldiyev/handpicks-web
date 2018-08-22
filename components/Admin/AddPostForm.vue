@@ -72,10 +72,12 @@
       const pad2 = s => `0${s}`.slice(-2);
       const pad4 = s => `0000${s}`.slice(-4)
       const dateStr = d => `${pad4(d.getFullYear())}-${pad2(d.getMonth())}-${pad2(d.getDate())}`;
+      let tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
       return {
         datePickerOptions: {
           disabledDate(time) {
-            return dateStr(time) < dateStr(new Date())
+            return dateStr(time) < dateStr(tomorrow)
           },
           firstDayOfWeek: 1
         },

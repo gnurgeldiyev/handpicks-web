@@ -15,29 +15,13 @@ import AddTopicForm from '@/components/Admin/AddTopicForm';
       'add-topic-form': AddTopicForm,
       'topic-list': TopicList,
     },
-    data() {
-      return {
-        topics: [
-          {
-            id: 1,
-            url: 'painting',
-            title: 'Painting',
-            description: 'Table supports single row selection.'
-          },
-          {
-            id: 2,
-            url: 'illustration',
-            title: 'Illustration',
-            description: 'Table supports single row selection.'
-          },
-          {
-            id: 3,
-            url: 'graphic',
-            title: 'Graphic',
-            description: 'Table supports single row selection.'
-          }
-        ]
-      }
+    computed: {
+      topics() {
+        return this.$store.getters['topic/getAllTopic'];
+      }      
+    },
+    beforeCreate() {
+      this.$store.dispatch('topic/fetchAllTopic');
     }
   }
 </script>

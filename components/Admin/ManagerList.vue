@@ -32,17 +32,9 @@
         </template>
       </el-table-column>
       <el-table-column
-        prop="email"
-        label="Email"
-        width="200">
-        <template slot-scope="scope">
-          {{ scope.row.email }}
-        </template>
-      </el-table-column>
-      <el-table-column
         prop="role"
         label="Role"
-        width="100">
+        width="200">
         <template slot-scope="scope">
           {{ scope.row.role }}
         </template>

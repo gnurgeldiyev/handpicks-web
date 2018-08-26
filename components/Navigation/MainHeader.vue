@@ -8,18 +8,15 @@
       </nuxt-link>
     </div>
     <div class="h_menu">
-      <ul class="h_menu_list">
-        <li class="h_menu_list_item">
-          <nuxt-link to="#">drawing</nuxt-link>
-        </li>
-        <li class="h_menu_list_item">
-          <nuxt-link to="#">illustration</nuxt-link>
-        </li>
-        <li class="h_menu_list_item">
-          <nuxt-link to="#">painting</nuxt-link>
-        </li>
-        <li class="h_menu_list_item h_menu_list_item-active">
-          <nuxt-link to="#">photography</nuxt-link>
+      <ul 
+        v-if="topics.length"
+        class="h_menu_list">
+        <li 
+          v-for="topic in topics"
+          :key="topic.id"
+          :class="{ 'h_menu_list_item-active': isActive(topic.url) }"
+          class="h_menu_list_item">
+          <nuxt-link :to="`/topic/${topic.url}`">{{ topic.title }}</nuxt-link>
         </li>
       </ul>
     </div>
@@ -28,7 +25,21 @@
 
 <script>
   export default {
-    
+    props: {
+      topics: {
+        type: Array,
+        default: () => []
+      }
+    },
+    methods: {
+      isActive(url) {
+        const route = this.$route.params.topicUrl;
+        if (route === url) {
+          return true;
+        } 
+        return false;
+      }
+    }
   }
 </script>
 

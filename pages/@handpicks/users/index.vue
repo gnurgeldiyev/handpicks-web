@@ -4,17 +4,17 @@
     <el-row>
       <el-col :span="8">
         <user-report-card 
-          :users="lastWeekUsers" 
+          :users="users7" 
           :title="'Last Week'" />
       </el-col>
       <el-col :span="8">
         <user-report-card 
-          :users="lastMonthUsers"
+          :users="users28"
           :title="'Last 28 Days'" />
       </el-col>
       <el-col :span="8">
         <user-report-card 
-          :users="totalUsers"
+          :users="usersTotal"
           :title="'Total'" />
       </el-col>
     </el-row>
@@ -29,75 +29,22 @@ import UserReportCard from '@/components/Admin/UserReportCard';
     components: {
       'user-report-card': UserReportCard,
     },
-    data() {
-      return {
-        lastWeekUsers: [
-          {
-            name: 'Lara Jobs'
-          },
-          {
-            name: 'Maya Bezos'
-          },
-          {
-            name: 'Lisa Gates'
-          },
-          {
-            name: 'Aya Ive'
-          }
-        ],
-        lastMonthUsers: [
-          {
-            name: 'Lara Jobs'
-          },
-          {
-            name: 'Maya Bezos'
-          },
-          {
-            name: 'Lisa Gates'
-          },
-          {
-            name: 'Aya Ive'
-          },
-          {
-            name: 'Lara Jobs'
-          },
-          {
-            name: 'Maya Bezos'
-          },
-          {
-            name: 'Lisa Gates'
-          },
-          {
-            name: 'Aya Ive'
-          }
-        ],
-        totalUsers: [
-          {
-            name: 'Lara Jobs'
-          },
-          {
-            name: 'Maya Bezos'
-          },
-          {
-            name: 'Lisa Gates'
-          },
-          {
-            name: 'Aya Ive'
-          },
-          {
-            name: 'Lara Jobs'
-          },
-          {
-            name: 'Maya Bezos'
-          },
-          {
-            name: 'Lisa Gates'
-          },
-          {
-            name: 'Aya Ive'
-          }
-        ],
+    computed: {
+      users7() {
+        return this.$store.getters['user/getUsers7'];
+      },
+      users28() {
+        return this.$store.getters['user/getUsers28'];
+      },
+      usersTotal() {
+        const totalUser = this.$store.getters['user/getUsersTotal'];
+        return [totalUser];
       }
+    },
+    beforeCreate() {
+      this.$store.dispatch('user/fetchUsers7');
+      this.$store.dispatch('user/fetchUsers28');
+      this.$store.dispatch('user/fetchUsersTotal');
     }
   }
 </script>

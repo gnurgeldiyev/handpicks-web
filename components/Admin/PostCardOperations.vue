@@ -13,26 +13,29 @@
       title="Edit the Post">
       <el-form 
         ref="editPost" 
-        :model="post"
+        :model="currentPost"
         :rules="rules">
         <el-form-item 
           prop="url"
           label="Source URL">
-          <el-input v-model="post.url"/>
+          <el-input 
+            v-model="currentPost.url"
+            :disabled="isPublished(post.published) === false ? false : true"/>
         </el-form-item>
         <el-form-item 
           prop="summary"
           label="Summary">
           <el-input
             :rows="8"
-            v-model="post.summary"
+            v-model="currentPost.summary"
             type="textarea"/>
         </el-form-item>
         <el-form-item 
           prop="topic"
           label="Topic">
           <el-select 
-            v-model="post.topic" 
+            v-model="currentPost.topic" 
+            :disabled="isPublished(post.published) === false ? false : true"
             style="width: 100%;">
             <el-option 
               v-for="topic in topics"
@@ -45,8 +48,9 @@
           prop="date"
           label="Publication date">
           <el-date-picker
-            v-model="post.date"
+            v-model="currentPost.date"
             :picker-options="datePickerOptions"
+            :disabled="isPublished(post.published) === false ? false : true"
             style="width: 100%;"
             type="date"
             placeholder="Select publication date"/>
@@ -55,7 +59,7 @@
           <el-button 
             style="float:right;"
             type="primary" 
-            @click="submitForm('editPost')">Add post</el-button>
+            @click="submitForm('editPost')">Update</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -103,26 +107,19 @@
       let tomorrow = new Date();
       tomorrow.setDate(tomorrow.getDate() + 1);
       return {
+        currentPost: {
+          url: this.post.url,
+          summary: this.post.summary,
+          topic: this.post.topic.id,
+          tags: this.post.tags,
+          date: this.post.published
+        },
         datePickerOptions: {
           disabledDate(time) {
             return dateStr(time) < dateStr(tomorrow)
           },
           firstDayOfWeek: 1
         },
-        topics: [
-          {
-            id: 1,
-            title: 'Graphic'
-          },
-          {
-            id: 2,
-            title: 'Illustration'
-          },
-          {
-            id: 3,
-            title: 'Painting'
-          }
-        ],
         rules: {
           url: [
             { required: true, message: 'Please enter a source URL', trigger: 'blur' },
@@ -130,7 +127,7 @@
           ],
           summary: [
             { required: true, message: 'Please enter a summary', trigger: 'blur' },
-            { min: 300, message: 'Length should be min 250 characters', trigger: 'blur' },
+            { min: 250, message: 'Length should be min 250 characters', trigger: 'blur' },
             { max: 500, message: 'Length should be max 500 characters', trigger: 'blur' }
           ],
           topic: [
@@ -144,21 +141,42 @@
         deletePopoverVisible: false,
       }
     },
+    computed: {
+      topics() {
+        return this.$store.getters['topic/getAllTopic'];
+      }
+    },
     methods: {
       parseDate(date) {
         return new Date(date);
       },
+      isPublished(publishedDate) {
+        const postDate = new Date(publishedDate);
+        const today = new Date();
+        if (postDate < today) {
+          return true;
+        }
+        return false;
+      },
       submitForm(formName) {
-        this.post.date = this.parseDate(this.post.date); // parsing date
-        this.$refs[formName].validate((valid) => {
+        this.currentPost.date = this.parseDate(this.currentPost.date); // parsing date
+        this.$refs[formName].validate(async (valid) => {
           if (valid) {     
             let post = {
-              url: this.post.url,
-              summary: this.post.summary,
-              topic: this.post.topic,
-              date: this.post.date
+              id: this.post.id,
+              summary: this.currentPost.summary,
+              topicId: this.currentPost.topic,
+              tags: this.currentPost.tags,
+              published: this.currentPost.date.setHours(3)
             }
-            console.log(post);
+            const result = await this.$store.dispatch('post/editPost', post);
+            if (!result) {
+              this.$message({
+                message: 'An error occurred.',
+                type: 'error'
+              });
+              return false;
+            }
             this.$refs[formName].resetFields();
             this.editPostDialogVisible = false;
             this.$message({
@@ -175,7 +193,29 @@
         this.editPostDialogVisible = false;
       },
       deletePost(postId) {
-
+        this.$confirm('This will permanently delete the post. Continue?', 'Warning', {
+          confirmButtonText: 'OK',
+          cancelButtonText: 'Cancel',
+          type: 'warning',
+        }).then(async () => {
+          const result = await this.$store.dispatch('post/deletePost', postId);
+          if (!result) {
+            this.$message({
+              type: 'error',
+              message: 'An error occurred.'
+            }); 
+            return false;
+          }
+          this.$message({
+            type: 'success',
+            message: 'Delete completed'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'Delete canceled'
+          });          
+        });
       },
     },
   }

@@ -44,6 +44,33 @@
               :value="topic.id" />
           </el-select>
         </el-form-item>
+        <el-form-item 
+          prop="tag"
+          label="Tags">
+          <el-tag
+            v-for="tag in post.tags"
+            :key="tag"
+            :disable-transitions="false"
+            closable
+            @close="handleClose(tag)">
+            {{ tag }}
+          </el-tag>
+          <el-input
+            v-if="inputVisible"
+            ref="saveTagInput"
+            v-model="inputValue"
+            class="input-new-tag"
+            size="mini"
+            @keyup.enter.native="handleInputConfirm"
+            @blur="handleInputConfirm"
+          />
+          <el-button 
+            v-else 
+            ref="addTagButton"
+            class="button-new-tag" 
+            size="small" 
+            @click="showInput">+ New Tag</el-button>
+        </el-form-item>
         <el-form-item
           prop="date"
           label="Publication date">
@@ -79,26 +106,15 @@
           disabledDate(time) {
             return dateStr(time) < dateStr(tomorrow)
           },
-          firstDayOfWeek: 1
+          firstDayOfWeek: 1,
         },
-        topics: [
-          {
-            id: 1,
-            title: 'Graphic'
-          },
-          {
-            id: 2,
-            title: 'Illustration'
-          },
-          {
-            id: 3,
-            title: 'Painting'
-          }
-        ],
+        inputVisible: false,
+        inputValue: '',
         post: {
           url: '',
           summary: '',
           topic: '',
+          tags: [],
           date: '',
         },
         rules: {
@@ -108,11 +124,14 @@
           ],
           summary: [
             { required: true, message: 'Please enter a summary', trigger: 'blur' },
-            { min: 300, message: 'Length should be min 250 characters', trigger: 'blur' },
+            { min: 250, message: 'Length should be min 250 characters', trigger: 'blur' },
             { max: 500, message: 'Length should be max 500 characters', trigger: 'blur' }
           ],
           topic: [
             { required: true, message: 'Please select a post topic', trigger: 'change' },
+          ],
+          tags: [
+            { type: 'array', required: true, message: 'Please enter at least one tag', trigger: 'change' }
           ],
           date: [
             { type: 'date', required: true, message: 'Please pick a publication date', trigger: 'change' }
@@ -121,18 +140,58 @@
         addPostDialogVisible: false,
       }
     },
+    computed: {
+      topics() {
+        return this.$store.getters['topic/getAllTopic'];
+      }
+    },
     methods: {
+      handleClose(tag) {
+        this.post.tags.splice(this.post.tags.indexOf(tag), 1);
+      },
+      showInput() {
+        if (this.post.tags.length < 5) {
+          this.inputVisible = true;
+          this.$nextTick(_ => {
+            this.$refs.saveTagInput.$refs.input.focus();
+          });
+        } else {
+          return false;
+        }
+      },
+      handleInputConfirm() {
+        let inputValue = this.inputValue;
+        if (this.post.tags.length > 0) {
+          if (inputValue) {
+            this.post.tags.push(inputValue);
+          }
+        } else {
+          if (inputValue) {
+            this.post.tags.push(inputValue);
+          }
+        }
+        this.inputVisible = false;
+        this.inputValue = '';
+      },
       submitForm(formName) {
-        this.$refs[formName].validate( (valid) => {
-          if (valid) {     
-
+        this.$refs[formName].validate(async (valid) => {
+          if (valid) { 
             let post = {
               url: this.post.url,
               summary: this.post.summary,
-              topic: this.post.topic,
-              date: this.post.date
+              topicId: this.post.topic,
+              ownerId: this.$cookies.get('id'),
+              tags: this.post.tags,
+              published: this.post.date.setHours(3)
             }
-            console.log(post);
+            const result = await this.$store.dispatch('post/addNewPost', post);
+            if (!result) {
+              this.$message({
+                type: 'error',
+                message: 'An error occurred.'
+              });
+              return false;
+            }
             this.$refs[formName].resetFields();
             this.addPostDialogVisible = false;
             this.$message({

@@ -7,7 +7,7 @@
         :src="post.thumbnail" 
         class="a_card_head_img">
       <span class="a_card_head_date">
-        {{ post.created }}
+        {{ formatDate(post.published) }}
       </span>
     </div>
     <div class="a_card_body">
@@ -15,7 +15,7 @@
         class="a_card_body_title"
         @click="cardDialogVisible = true">{{ post.title }}</h4>
       <span class="a_card_owner">
-        {{ post.owner }}
+        {{ post.owner.name }} {{ post.owner.lastname }}
       </span>
       <span class="a_card_seperator">
         •
@@ -40,7 +40,7 @@
         {{ post.title }}
       </h2>
       <span class="a_card_dialog_note">
-        {{ post.owner }}'s note
+        {{ post.owner.name }}'s note
       </span>
       <p class="a_card_dialog_description">
         {{ post.summary }}
@@ -75,6 +75,19 @@ import PostCardOperations from '@/components/Admin/PostCardOperations';
         cardDialogVisible: false
       }
     },
+    methods: {
+      formatDate(date) {
+        const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        const day = new Date(date).getDate();
+        const month = months[new Date(date).getMonth()];
+        const weekDay = days[new Date(date).getDay()];
+        return day + ' ' + month + ' ' + weekDay;
+      },
+      goToSource(url) {
+        window.open(url, '_blank');
+      },
+    }
   }
 </script>
 

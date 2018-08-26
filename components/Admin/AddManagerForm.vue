@@ -102,9 +102,8 @@
     },
     methods: {
       submitForm(formName) {
-        this.$refs[formName].validate( (valid) => {
+        this.$refs[formName].validate(async (valid) => {
           if (valid) {     
-
             let manager = {
               name: this.manager.name,
               lastname: this.manager.lastname,
@@ -112,7 +111,14 @@
               role: this.manager.role,
               password: this.manager.password,
             }
-            console.log(manager);
+            const result = await this.$store.dispatch('manager/addNewManager', manager);
+            if (!result) {
+              this.$message({
+                type: 'error',
+                message: 'An error occurred.'
+              });
+              return false;
+            }
             this.$refs[formName].resetFields();
             this.addManagerDialogVisible = false;
             this.$message({

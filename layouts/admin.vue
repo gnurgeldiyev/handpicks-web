@@ -6,7 +6,7 @@
     <el-main>
       <el-row :gutter="16">
         <el-col :span="4">
-          <admin-menu />
+          <admin-menu :topics="topics" />
         </el-col>
         <el-col :span="20">
           <nuxt/>
@@ -24,6 +24,16 @@ export default {
   components: {
     'admin-header': AdminHeader,
     'admin-menu': AdminMenu,
+  },
+  computed: {
+    topics() {
+      return this.$store.getters['topic/getAllTopic'];
+    }
+  },
+  beforeCreate() {
+    this.$store.dispatch('topic/fetchAllTopic');
+    const managerId = this.$cookies.get('id');
+    this.$store.dispatch('manager/fetchManagerById', managerId);
   },
 }
 </script>

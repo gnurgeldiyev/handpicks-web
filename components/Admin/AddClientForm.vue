@@ -52,13 +52,19 @@
     },
     methods: {
       submitForm(formName) {
-        this.$refs[formName].validate( (valid) => {
+        this.$refs[formName].validate(async (valid) => {
           if (valid) {     
-
             let client = {
               name: this.client.name
             }
-            console.log(client);
+            const result = await this.$store.dispatch('client/addNewClient', client);
+            if (!result) {
+              this.$message({
+                type: 'error',
+                message: 'An error occurred.'
+              });
+              return false;
+            }
             this.$refs[formName].resetFields();
             this.addClientDialogVisible = false;
             this.$message({

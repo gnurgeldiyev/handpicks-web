@@ -5,19 +5,11 @@
         <span>Posts</span>
       </template>
       <el-menu-item
-        index="1-1"
-        @click="goTo('/@handpicks/posts')">
-        <span>Graphic</span>
-      </el-menu-item>
-      <el-menu-item
-        index="1-2"
-        @click="goTo('#')">
-        <span>Illustration</span>
-      </el-menu-item>
-      <el-menu-item
-        index="1-3"
-        @click="goTo('#')">
-        <span>Painting</span>
+        v-for="(topic, index) in topics"
+        :key="topic.id"
+        :index="`1-${index + 1}`"
+        @click="goTo(`/@handpicks/posts/${topic.url}`)">
+        <span>{{ topic.title }}</span>
       </el-menu-item>
     </el-submenu>
     <el-menu-item
@@ -45,6 +37,12 @@
 
 <script>
   export default {
+    props: {
+      topics: {
+        type: Array,
+        required: true,
+      }
+    },
     methods: {
       goTo(url) {
         this.$router.push(url);

@@ -52,10 +52,6 @@
           window.open(url, '_blank');
         }
       },
-      beforeClose() {
-        this.$refs.postViewDialog.close();
-        this.$router.push('/');
-      }
     }
   }
 </script>

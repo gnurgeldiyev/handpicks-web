@@ -33,36 +33,7 @@
         Editor's note
       </span>
       <p class="card_dialog_description">
-        {{ post.description }}
-      </p>
-      <div class="card_dialog_action">
-        <el-button 
-          type="primary"
-          round
-          @click="goToSource(post.url)">View Source 
-          <i class="el-icon-arrow-right el-icon-right"/>
-        </el-button>
-      </div>
-    </el-dialog>
-
-    <el-dialog
-      ref="postViewDialog"
-      :visible.sync="isPostViewDialogVisible"
-      :lock-scroll="true"
-      :custom-class="'card_dialog'"
-      :before-close="beforeClose">
-      <img 
-        :src="post.thumbnail" 
-        :alt="post.title"
-        class="card_dialog_thumbnail">
-      <h2 class="card_dialog_title">
-        {{ post.title }}
-      </h2>
-      <span class="card_dialog_note">
-        Editor's note
-      </span>
-      <p class="card_dialog_description">
-        {{ post.description }}
+        {{ post.summary }}
       </p>
       <div class="card_dialog_action">
         <el-button 
@@ -83,14 +54,9 @@
         type: Object,
         required: true
       },
-      isvisible: {
-        type: Boolean,
-        default: false
-      } 
     },
     data() {
       return {
-        isPostViewDialogVisible: this.isvisible,
         cardDialogVisible: false
       }
     },
@@ -103,11 +69,6 @@
           window.open(url, '_blank');
         }
       },
-      beforeClose() {
-        this.isPostViewDialogVisible = false;
-        this.$refs.postViewDialog.close();
-        this.$router.push('/');
-      }
     }
   }
 </script>

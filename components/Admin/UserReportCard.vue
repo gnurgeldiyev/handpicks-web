@@ -1,10 +1,11 @@
-<template>
+<template v-if="users">
   <el-card 
     v-if="title == 'Total'"
     class="u_card">
     <div slot="header">
       <span>{{ title }}</span>
-      <p style="float: right;">{{ users.length }}</p>
+      <p 
+        style="float: right;">{{ users[0] }}</p>
     </div>
   </el-card>
   <el-card 
@@ -12,15 +13,17 @@
     class="u_card">
     <div slot="header">
       <span>{{ title }}</span>
-      <p style="float: right;">{{ users.length }}</p>
+      <p
+        style="float: right;">{{ users.length }}</p>
     </div>
-    <ul class="u_card_list">
+    <ul 
+      class="u_card_list">
       <li 
         v-for="user in users"
         :key="user.name"
         class="u_card_list_item">
-        {{ user.name }}
-        <span class="u_card_list_item_info">19 August, Sunday</span>
+        {{ user.name }} {{ user.lastname }}
+        <span class="u_card_list_item_info">{{ formatDate(user.created) }}</span>
       </li>
     </ul>
   </el-card>
@@ -31,12 +34,22 @@
     props: {
       users: {
         type: Array,
-        required: true,
+        default: () => [], 
       },
       title: {
         type: String,
         required: true,
       }
+    },
+    methods: {
+      formatDate(date) {
+        const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        const day = new Date(date).getDate();
+        const month = months[new Date(date).getMonth()];
+        const weekDay = days[new Date(date).getDay()];
+        return day + ' ' + month + ' ' + weekDay;
+      },
     }
   }
 </script>

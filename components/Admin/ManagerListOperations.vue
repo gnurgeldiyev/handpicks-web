@@ -13,28 +13,23 @@
       title="Edit the Manager">
       <el-form 
         ref="manager" 
-        :model="manager"
+        :model="currentManager"
         :rules="rules">
         <el-form-item 
           prop="name"
           label="Name">
-          <el-input v-model="manager.name"/>
+          <el-input v-model="currentManager.name"/>
         </el-form-item>
         <el-form-item 
           prop="lastname"
           label="Lastname">
-          <el-input v-model="manager.lastname"/>
-        </el-form-item>
-        <el-form-item 
-          prop="email"
-          label="Email">
-          <el-input v-model="manager.email"/>
+          <el-input v-model="currentManager.lastname"/>
         </el-form-item>
         <el-form-item 
           prop="role"
           label="Role">
           <el-select 
-            v-model="manager.role" 
+            v-model="currentManager.role" 
             style="width: 100%;">
             <el-option 
               label="Admin" 
@@ -48,7 +43,7 @@
           prop="password"
           label="Password">
           <el-input 
-            v-model="manager.password"
+            v-model="currentManager.password"
             type="password"/>
         </el-form-item>
         <el-form-item>
@@ -77,6 +72,13 @@
     },
     data() {
       return {
+        currentManager: {
+          id: this.manager.id,
+          name: this.manager.name,
+          lastname: this.manager.lastname,
+          role: this.manager.role,
+          password: '',
+        },
         editManagerDialogVisible: false,
         rules: {
           name: [
@@ -87,10 +89,6 @@
             { required: true, message: 'Please enter a manager lastname', trigger: 'blur' },
             { max: 64, message: 'Length should be max 64 characters', trigger: 'blur' }
           ],
-          email: [
-            { required: true, message: 'Please enter a email', trigger: 'blur' },
-            { type: 'email', message: 'Please enter a valid email', trigger: 'blur' }
-          ],
           role: [
             { required: true, message: 'Please select a manager role', trigger: 'change' },
           ],
@@ -99,7 +97,7 @@
     },
     methods: {
       submitForm(formName) {
-        this.$refs[formName].validate( (valid) => {
+        this.$refs[formName].validate(async (valid) => {
           if (valid) {     
             if (this.manager.password !== undefined && this.manager.password.length < 6) {
               this.$message({
@@ -108,16 +106,21 @@
               });
               return false;
             } 
-
             let manager = {
-              name: this.manager.name,
-              lastname: this.manager.lastname,
-              email: this.manager.email,
-              role: this.manager.role,
-              password: this.manager.password,
+              id: this.currentManager.id,
+              name: this.currentManager.name,
+              lastname: this.currentManager.lastname,
+              role: this.currentManager.role,
+              password: this.currentManager.password,
             }
-            
-            console.log(manager);
+            const result = await this.$store.dispatch('manager/editManager', manager);
+            if (!result) {
+              this.$message({
+                message: 'An error occurred.',
+                type: 'error'
+              });
+              return false;
+            }
             this.$refs[formName].resetFields();
             this.editManagerDialogVisible = false;
             this.$message({
@@ -138,8 +141,15 @@
           confirmButtonText: 'OK',
           cancelButtonText: 'Cancel',
           type: 'warning',
-        }).then(() => {
-          // this.$store.dispatch('deleteDemoRequest', id);
+        }).then(async () => {
+          const result = await this.$store.dispatch('manager/deleteManager', id);
+          if (!result) {
+            this.$message({
+              type: 'error',
+              message: 'An error occurred.'
+            }); 
+            return false;
+          }
           this.$message({
             type: 'success',
             message: 'Delete completed'

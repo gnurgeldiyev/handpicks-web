@@ -4,7 +4,7 @@
       size="mini"
       style="margin-left: 8px;"
       type="danger"
-      @click="deleteClientAlert(client.name)">Delete</el-button>
+      @click="deleteClientAlert(client.id)">Delete</el-button>
   </div>
 </template>
 
@@ -22,8 +22,15 @@
           confirmButtonText: 'OK',
           cancelButtonText: 'Cancel',
           type: 'warning',
-        }).then(() => {
-          // this.$store.dispatch('deleteDemoRequest', id);
+        }).then(async () => {
+          const result = await this.$store.dispatch('client/deleteClient', id);
+          if (!result) {
+            this.$message({
+              type: 'error',
+              message: 'An error occurred.'
+            }); 
+            return false;
+          }
           this.$message({
             type: 'success',
             message: 'Delete completed'

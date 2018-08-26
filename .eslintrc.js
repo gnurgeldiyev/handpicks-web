@@ -206,7 +206,7 @@ module.exports = {
         'response', // for Express responses
         'state', // for vuex state
         'instance',
-        'app' 
+        'app'
       ]
     }],
 

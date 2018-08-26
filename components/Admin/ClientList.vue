@@ -25,11 +25,12 @@
             width="400"
             trigger="click">
             <span style="word-break: break-all;">
-              {{ getRequestHeader(scope.row.name, scope.row.apiKey) }}
+              {{ getRequestHeader(scope.row.id) }}
             </span>
             <el-button 
               slot="reference"
-              size="small">Show</el-button>
+              size="small"
+              @click="fetchKey(scope.row.id)">Show</el-button>
           </el-popover>
         </template>
       </el-table-column>
@@ -71,8 +72,12 @@ import ClientListOperations from '@/components/Admin/ClientListOperations';
         const year = new Date(date).getFullYear();
         return day + '.' + month + '.' + year;
       },
-      getRequestHeader(name, apiKey) {
-        return `name=${name}, apiKey=${apiKey}`;
+      fetchKey(clientId) {
+        this.$store.dispatch('client/fetchClientKey', clientId);
+      },
+      getRequestHeader(clientId) {
+        const client = this.$store.getters['client/getClient'];
+        return `name=${client.name}, apiKey=${client.apiKey}`;
       }
     }
   }

@@ -3,6 +3,9 @@ const pkg = require('./package')
 module.exports = {
   mode: 'universal',
 
+  router: {
+    middleware: 'checkAuth'
+  },
   /*
   ** Headers of the page
   */
@@ -21,7 +24,7 @@ module.exports = {
   /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#FFFFFF' },
+  loading: { color: '#000001' },
 
   /*
   ** Global CSS
@@ -34,7 +37,8 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '@/plugins/element-ui'
+    '@/plugins/element-ui',
+    '@/plugins/axios'
   ],
 
   /*
@@ -42,13 +46,20 @@ module.exports = {
   */
   modules: [
     // Doc: https://github.com/nuxt-community/axios-module#usage
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    'cookie-universal-nuxt',
   ],
   /*
   ** Axios module configuration
   */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
+    baseURL: process.env.baseUrl,
+    credentials: true,
+    debug: false,
+    retry: {
+      retries: 3
+    },
   },
 
   /*
@@ -73,5 +84,9 @@ module.exports = {
   /*
   ** ENV variables
   */
-  env: {}
+  env: {
+    baseUrl: process.env.API_URL,
+    clientName: process.env.CLIENT_NAME,
+    clientApiKey: process.env.CLIENT_APIKEY
+  }
 }

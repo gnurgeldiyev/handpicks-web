@@ -57,7 +57,6 @@
           ],
           description: [
             { required: true, message: 'Please enter a description', trigger: 'blur' },
-            { min: 64, message: 'Length should be min 64 characters', trigger: 'blur' },
             { max: 128, message: 'Length should be max 128 characters', trigger: 'blur' }
           ],
         },
@@ -66,19 +65,25 @@
     },
     methods: {
       submitForm(formName) {
-        this.$refs[formName].validate( (valid) => {
+        this.$refs[formName].validate( async (valid) => {
           if (valid) {     
-
             let topic = {
               title: this.topic.title,
               description: this.topic.description
             }
-            console.log(topic);
+            const result = await this.$store.dispatch('topic/addNewTopic', topic);
+            if (!result) {
+              this.$message({
+                type: 'error',
+                message: 'An error occurred.'
+              });
+              return false;
+            }
             this.$refs[formName].resetFields();
             this.addTopicDialogVisible = false;
             this.$message({
-              message: 'Topic added.',
-              type: 'success'
+              type: 'success',
+              message: 'Topic added.'
             });
           } else {
             return false;

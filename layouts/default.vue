@@ -1,7 +1,7 @@
 <template>
   <div>
     <div ref="content">
-      <main-header />
+      <main-header :topics="topics" />
       <nuxt />
     </div>
     <main-footer :height="contentHeight" />
@@ -20,6 +20,14 @@ export default {
     return {
       contentHeight: 'top: ',
     }
+  },
+  computed: {
+    topics() {
+      return this.$store.getters['topic/getAllTopic'];
+    }
+  },
+  beforeCreate() {
+    this.$store.dispatch('topic/fetchAllTopic');
   },
   mounted () {
     const windowHeight = window.innerHeight;

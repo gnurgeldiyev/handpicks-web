@@ -72,13 +72,21 @@ import MainFooter from '@/components/Navigation/MainFooter';
     },
     methods: {
       submitForm(formName) {
-        this.$refs[formName].validate((valid) => {
+        this.$refs[formName].validate( async (valid) => {
           if (valid) {     
             let manager = {
               email: this.manager.email,
               password: this.manager.password
             }
-            console.log(manager);
+            const result = await this.$store.dispatch('manager/loginManager', manager);
+            if (!result) {
+              this.$refs[formName].resetFields();
+              this.$message({
+                message: 'Incorrect email or password.',
+                type: 'error'
+              });
+              return false; 
+            } 
             this.$refs[formName].resetFields();
             this.$message({
               message: 'Logged in.',

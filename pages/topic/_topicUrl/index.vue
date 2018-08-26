@@ -25,7 +25,8 @@ export default {
     },
   },
   beforeCreate() {
-    this.$store.dispatch('post/fetchLatestPost');
+    const topicUrl = this.$route.params.topicUrl;
+    this.$store.dispatch('post/fetchLatestPostByTopic', topicUrl);
   },
   methods: {
     formatDate(date) {

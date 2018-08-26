@@ -7,7 +7,7 @@
           class="a-header__logo">
           handpicks
         </nuxt-link>
-        <span>editor</span>
+        <span>{{ manager.role }}</span>
       </div>
     </el-col>
     <el-col :span="16">
@@ -18,14 +18,10 @@
         <li class="a-header__menu__item a-header__menu__item--active">
           <el-dropdown trigger="click">
             <span class="el-dropdown-link">
-              Guvanch<i class="el-icon-arrow-down el-icon--right"/>
+              {{ manager.name }}<i class="el-icon-arrow-down el-icon--right"/>
             </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>Action 1</el-dropdown-item>
-              <el-dropdown-item>Action 2</el-dropdown-item>
-              <el-dropdown-item>Action 3</el-dropdown-item>
-              <el-dropdown-item>Action 4</el-dropdown-item>
-              <el-dropdown-item>Action 5</el-dropdown-item>
+              <el-dropdown-item @click.native="logout(manager.id, manager.token)">Logout</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </li>
@@ -36,7 +32,32 @@
 
 <script>
   export default {
-    
+    computed: {
+      manager() {
+        return this.$store.getters['manager/getManager'];
+      }
+    },
+    methods: {
+      async logout(managerId, managerToken) {
+        let manager = {
+          id: managerId,
+          token: managerToken
+        }
+        const result = await this.$store.dispatch('manager/logoutManager', manager);
+        if (!result) {
+          this.$message({
+            message: 'An error occurred.',
+            type: 'error'
+          });
+          return false;
+        }
+        this.$message({
+          message: 'Logged out.',
+          type: 'success'
+        });
+        this.$router.push('/');
+      }
+    }
   }
 </script>
 

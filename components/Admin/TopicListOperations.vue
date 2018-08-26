@@ -13,19 +13,19 @@
       title="Edit the Topic">
       <el-form 
         ref="topic" 
-        :model="topic"
+        :model="currentTopic"
         :rules="rules">
         <el-form-item 
           prop="title"
           label="Title">
-          <el-input v-model="topic.title"/>
+          <el-input v-model="currentTopic.title"/>
         </el-form-item>
         <el-form-item 
           prop="description"
           label="Description">
           <el-input
             :rows="4"
-            v-model="topic.description"
+            v-model="currentTopic.description"
             type="textarea"/>
         </el-form-item>
         <el-form-item>
@@ -54,6 +54,10 @@
     },
     data() {
       return {
+        currentTopic: {
+          title: this.topic.title,
+          description: this.topic.description
+        },
         editTopicDialogVisible: false,
         rules: {
           title: [
@@ -62,7 +66,6 @@
           ],
           description: [
             { required: true, message: 'Please enter a description', trigger: 'blur' },
-            { min: 64, message: 'Length should be min 64 characters', trigger: 'blur' },
             { max: 128, message: 'Length should be max 128 characters', trigger: 'blur' }
           ],
         },
@@ -70,14 +73,21 @@
     },
     methods: {
       submitForm(formName) {
-        this.$refs[formName].validate( (valid) => {
+        this.$refs[formName].validate(async (valid) => {
           if (valid) {     
-
             let topic = {
-              title: this.topic.title,
-              description: this.topic.description
+              id: this.topic.id,
+              title: this.currentTopic.title,
+              description: this.currentTopic.description
             }
-            console.log(topic);
+            const result = await this.$store.dispatch('topic/editTopic', topic);
+            if (!result) {
+              this.$message({
+                message: 'An error occurred.',
+                type: 'error'
+              });
+              return false;
+            }
             this.$refs[formName].resetFields();
             this.editTopicDialogVisible = false;
             this.$message({
@@ -98,8 +108,15 @@
           confirmButtonText: 'OK',
           cancelButtonText: 'Cancel',
           type: 'warning',
-        }).then(() => {
-          // this.$store.dispatch('deleteDemoRequest', id);
+        }).then(async () => {
+          const result = await this.$store.dispatch('topic/deleteTopic', id);
+          if (!result) {
+            this.$message({
+              type: 'error',
+              message: 'An error occurred.'
+            }); 
+            return false;
+          }
           this.$message({
             type: 'success',
             message: 'Delete completed'

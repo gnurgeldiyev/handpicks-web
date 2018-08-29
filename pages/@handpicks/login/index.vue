@@ -40,6 +40,7 @@ import MainFooter from '@/components/Navigation/MainFooter';
 
   export default {
     layout: 'blank',
+    middleware: 'checkAuth',
     components: {
       'main-footer': MainFooter,
     },
@@ -59,6 +60,11 @@ import MainFooter from '@/components/Navigation/MainFooter';
             { required: true, message: 'Please enter a password', trigger: 'blur' },
           ],
         },
+      }
+    },
+    beforeCreate() {
+      if (this.$store.getters['manager/getToken'] !== null) {
+        this.$router.push('/@handpicks')
       }
     },
     mounted () {

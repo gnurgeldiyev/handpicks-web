@@ -21,6 +21,7 @@ import AdminHeader from '@/components/Navigation/AdminHeader';
 import AdminMenu from '@/components/Navigation/AdminMenu';
 
 export default {
+  middleware: ['checkAuth', 'auth'],
   components: {
     'admin-header': AdminHeader,
     'admin-menu': AdminMenu,

@@ -1,6 +1,7 @@
 export const state = () => ({
   manager: {},
   managers: [],
+  token: null,
 })
 
 export const getters = {
@@ -10,6 +11,9 @@ export const getters = {
   getManager: (state) => {
     return state.manager;
   },
+  getToken: (state) => {
+    return state.token;
+  }
 }
 
 export const mutations = {
@@ -35,6 +39,12 @@ export const mutations = {
       return true;
     });
     state.managers.splice(managerIndex, 1);
+  },
+  setToken: (state, token) => {
+    state.token = token;
+  },
+  clearToken: (state) => {
+    state.token = null;
   }
 }
 
@@ -98,9 +108,16 @@ export const actions = {
   loginManager({ commit }, manager) {
     return this.$axios.$post('/managers/login', { manager })
     .then((response) => {
-      this.$cookies.set('token', response.manager.token);
-      this.$cookies.set('id', response.manager.id);
+      this.$cookies.set('token', response.manager.token, {
+        path: '/',
+        maxAge: 60 * 60 * 24 * 7
+      });
+      this.$cookies.set('id', response.manager.id, {
+        path: '/',
+        maxAge: 60 * 60 * 24 * 7
+      });
       commit('setManager', response.manager);
+      commit('setToken', response.manager.token);
       return true;
     })
     .catch((err) => {
@@ -108,11 +125,20 @@ export const actions = {
       return false;
     });
   },
+  initAuth({ commit }) {
+    if (this.$cookies.get('token')) {
+      const token = this.$cookies.get('token');
+      commit('setToken', token);
+    } else {
+      commit('clearToken');
+    }
+  },
   logoutManager({ commit }, manager) {
     return this.$axios.$post('/managers/logout', { manager })
-    .then((response) => {
+    .then(() => {
       this.$cookies.remove('token');
       this.$cookies.remove('id');
+      commit('clearToken');
       return true;
     })
     .catch((err) => {

@@ -1,4 +1,3 @@
-export default function () {
-  // If nuxt generate, pass this middleware
-  
+export default function(context) {
+  context.store.dispatch('manager/initAuth');
 }

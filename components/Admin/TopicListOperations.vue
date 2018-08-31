@@ -1,6 +1,7 @@
 <template>
   <div>
     <el-button
+      :disabled="manager.role === 'admin' ? false : true"
       size="mini"
       style="margin-right: 8px;"
       @click="editTopicDialogVisible = true">Edit</el-button>
@@ -37,6 +38,7 @@
       </el-form>
     </el-dialog>
     <el-button
+      :disabled="manager.role === 'admin' ? false : true"
       size="mini"
       style="margin-left: 8px;"
       type="danger"
@@ -69,6 +71,11 @@
             { max: 128, message: 'Length should be max 128 characters', trigger: 'blur' }
           ],
         },
+      }
+    },
+    computed: {
+      manager() {
+        return this.$store.getters['manager/getManager'];
       }
     },
     methods: {

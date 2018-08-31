@@ -1,5 +1,5 @@
 <template>
-  <el-row>
+  <el-row v-if="manager.id === post.owner.id">
     <el-button 
       class="a_card_body_operations_edit"
       type="text"
@@ -144,6 +144,9 @@
     computed: {
       topics() {
         return this.$store.getters['topic/getAllTopic'];
+      },
+      manager() {
+        return this.$store.getters['manager/getManager'];
       }
     },
     methods: {

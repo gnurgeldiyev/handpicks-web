@@ -23,11 +23,13 @@
       <span>Users</span>
     </el-menu-item>
     <el-menu-item
+      v-if="manager.role === 'admin'"
       index="4"
       @click="goTo('/@handpicks/managers')">
       <span>Managers</span>
     </el-menu-item>
     <el-menu-item
+      v-if="manager.role === 'admin'"
       index="5"
       @click="goTo('/@handpicks/clients')">
       <span>API Clients</span>
@@ -41,6 +43,11 @@
       topics: {
         type: Array,
         required: true,
+      }
+    },
+    computed: {
+      manager() {
+        return this.$store.getters['manager/getManager'];
       }
     },
     methods: {

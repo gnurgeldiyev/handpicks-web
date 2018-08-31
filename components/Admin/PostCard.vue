@@ -4,7 +4,7 @@
       class="a_card_head"
       @click="cardDialogVisible = true">
       <img 
-        :src="post.thumbnail" 
+        v-lazy="post.thumbnail" 
         class="a_card_head_img">
       <span class="a_card_head_date">
         {{ formatDate(post.published) }}
@@ -33,7 +33,7 @@
       :lock-scroll="true"
       :custom-class="'a_card_dialog'">
       <img 
-        :src="post.thumbnail" 
+        v-lazy="post.thumbnail" 
         :alt="post.title"
         class="a_card_dialog_thumbnail">
       <h2 class="a_card_dialog_title">

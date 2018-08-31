@@ -35,7 +35,8 @@ module.exports = {
   */
   plugins: [
     '@/plugins/element-ui',
-    '@/plugins/axios'
+    '@/plugins/axios',
+    { src: '@/plugins/vue-lazyload', ssr: false }
   ],
 
   /*

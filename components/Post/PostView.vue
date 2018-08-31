@@ -1,7 +1,7 @@
 <template>
   <div class="post">
     <img 
-      :src="post.thumbnail" 
+      v-lazy="post.thumbnail"
       :alt="post.title"
       class="post_thumbnail">
     <h2 class="post_title">

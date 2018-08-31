@@ -5,7 +5,7 @@
       @click="cardDialogVisible = true">
       <div class="card_head">
         <img 
-          :src="post.thumbnail" 
+          v-lazy="post.thumbnail"
           :alt="post.title"
           class="card_head_thumbnail">
       </div>
@@ -23,7 +23,7 @@
       :lock-scroll="true"
       :custom-class="'card_dialog'">
       <img 
-        :src="post.thumbnail" 
+        v-lazy="post.thumbnail"
         :alt="post.title"
         class="card_dialog_thumbnail">
       <h2 class="card_dialog_title">

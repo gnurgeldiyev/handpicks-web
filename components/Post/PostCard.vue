@@ -98,6 +98,7 @@
   .card_body {
     width: 100%;
     height: auto;
+    text-align: left;
   }
   .card_body_hostname {
     margin: 8px 0 0 0;
@@ -178,6 +179,7 @@
   .card_body {
     width: 100%;
     height: auto;
+    text-align: left;
   }
   .card_body_hostname {
     margin: 8px 0 0 0;

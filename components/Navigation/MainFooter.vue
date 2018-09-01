@@ -134,28 +134,7 @@
 <style>
 @media (max-width: 519px) {
   .footer {
-    margin: 32px 16px 16px 16px;
-  }
-  .f_item {
-    margin: 16px 0 !important;
-    color: #666666;
-    font-size: 0.9rem;
-    font-weight: 500;
-  }
-  .f_item a {
-    text-decoration: none;
-    color: #666666;
-  }
-  .f_item a:hover,
-  .f_item a:hover .f_item_icon,
-  .f_item_icon:hover {
-    text-decoration: none;
-    cursor: pointer;
-  }
-  .f_item_icon {
-    width: auto;
-    height: 0.9rem;
-    margin: 0 8px;
+    display: none;
   }
 }
 @media (min-width: 520px) and (max-width: 1280px) {

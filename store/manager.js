@@ -1,6 +1,7 @@
 export const state = () => ({
   manager: {},
   managers: [],
+  deletedManagers: [],
   token: null,
 })
 
@@ -13,6 +14,9 @@ export const getters = {
   },
   getToken: (state) => {
     return state.token;
+  },
+  getDeleted: (state) => {
+    return state.deletedManagers;
   }
 }
 
@@ -22,6 +26,9 @@ export const mutations = {
   },
   setAllManager: (state, managers) => {
     state.managers = managers;
+  },
+  setDeleted: (state, managers) => {
+    state.deletedManagers = managers;
   },
   updateManager: (state, manager) => {
     let index = null;
@@ -64,6 +71,17 @@ export const actions = {
     return this.$axios.$get(`/managers/${managerId}`)
     .then((response) => {
       commit('setManager', response.manager);
+      return true;
+    })
+    .catch((err) => {
+      console.log(err);
+      return false;
+    });
+  },
+  fetchDeleted({ commit }) {
+    return this.$axios.$get('/managers?deleted=true')
+    .then((response) => {
+      commit('setDeleted', response.managers);
       return true;
     })
     .catch((err) => {

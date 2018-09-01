@@ -2,6 +2,9 @@
   <div>
     <add-manager-form />
     <manager-list :managers="managers" />
+    <manager-list 
+      :managers="deletedManagers"
+      :type="'deleted'" />
   </div>
 </template>
 
@@ -18,10 +21,14 @@ import AddManagerForm from '@/components/Admin/AddManagerForm';
     computed: {
       managers() {
         return this.$store.getters['manager/getAllManager'];
-      }      
+      },
+      deletedManagers() {
+        return this.$store.getters['manager/getDeleted'];
+      }
     },
     beforeCreate() {
       this.$store.dispatch('manager/fetchAllManager');
+      this.$store.dispatch('manager/fetchDeleted');
     }
   }
 </script>

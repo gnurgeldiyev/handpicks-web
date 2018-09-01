@@ -1,5 +1,52 @@
 <template>
-  <div>
+  <div 
+    v-if="type === 'deleted'"
+    style="margin-bottom:64px;">
+    <h2 style="color:#666666;padding:8px;">Deleted managers</h2>
+    <el-table
+      :data="managers"
+      style="width: 100%">
+      <el-table-column
+        type="index"
+        width="50"/>
+      <el-table-column
+        prop="username"
+        label="Username"
+        width="200">
+        <template slot-scope="scope">
+          {{ scope.row.username }}
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="name"
+        label="Name"
+        width="200">
+        <template slot-scope="scope">
+          {{ scope.row.name }}
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="lastname"
+        label="Lastname"
+        width="200">
+        <template slot-scope="scope">
+          {{ scope.row.lastname }}
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="role"
+        label="Role"
+        width="200">
+        <template slot-scope="scope">
+          {{ scope.row.role }}
+        </template>
+      </el-table-column>
+      <el-table-column />
+    </el-table>
+  </div>
+  <div 
+    v-else
+    style="margin-bottom:64px;">
     <h2 style="color:#666666;padding:8px;">Managers</h2>
     <el-table
       :data="managers"
@@ -61,6 +108,10 @@ import ManagerListOperations from '@/components/Admin/ManagerListOperations';
         type: Array,
         required: true,
       },
+      type: {
+        type: String,
+        default: ''
+      }
     },
   }
 </script>

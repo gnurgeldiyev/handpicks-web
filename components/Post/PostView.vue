@@ -7,17 +7,20 @@
     <h2 class="post_title">
       {{ post.title }}
     </h2>
-    <span class="post_note">
-      Editor's note
+    <span class="post_topic">
+      {{ post.topic.title }}
     </span>
     <span class="post_seperator">
       •
     </span>
     <span class="post_date">
-      Posted on August 12th, Sunday
+      {{ formatDate(post.published) }}
     </span>
+    <p class="post_note">
+      Editor's note
+    </p>
     <p class="post_description">
-      {{ post.description }}
+      {{ post.summary }}
     </p>
     <div class="post_action">
       <el-button 
@@ -52,6 +55,14 @@
           window.open(url, '_blank');
         }
       },
+      formatDate(date) {
+        const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        const day = new Date(date).getDate();
+        const month = months[new Date(date).getMonth()];
+        const weekDay = days[new Date(date).getDay()];
+        return weekDay + ', ' + month + ' ' + day;
+      }
     }
   }
 </script>
@@ -78,11 +89,18 @@
     text-align: center;
     margin: 16px 0;
   }
-  .post_note {
+  .post_topic {
     color: #666666;
     font-size: 0.8rem;
     line-height: 1;
+    font-weight: 600;
+  }
+  .post_note {
+    color: #666666;
+    font-size: 0.9rem;
+    line-height: 1;
     font-weight: 700;
+    margin: 24px 0 8px 0;
   }
   .post_date {
     color: #666666;
@@ -129,11 +147,18 @@
     text-align: center;
     margin: 16px 0;
   }
-  .post_note {
+  .post_topic {
     color: #666666;
     font-size: 0.8rem;
     line-height: 1;
+    font-weight: 600;
+  }
+  .post_note {
+    color: #666666;
+    font-size: 0.9rem;
+    line-height: 1;
     font-weight: 700;
+    margin: 24px 0 8px  0;
   }
   .post_date {
     color: #666666;

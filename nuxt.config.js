@@ -54,7 +54,7 @@ module.exports = {
     // See https://github.com/nuxt-community/axios-module#options
     baseURL: process.env.baseUrl,
     credentials: true,
-    debug: false,
+    debug: true,
     retry: {
       retries: 3
     },

@@ -1,10 +1,14 @@
 export const state = () => ({
+  post: {},
   posts: [],
   postsToday: [],
   postsUpcoming: [],
 })
 
 export const getters = {
+  getOne: (state) => {
+    return state.post;
+  },
   getAllPost: (state) => {
     return state.posts;
   },
@@ -17,6 +21,9 @@ export const getters = {
 }
 
 export const mutations = {
+  setOne: (state, post) => {
+    state.post = post;
+  },
   setAllPost: (state, posts) => {
     state.posts = posts;
   },
@@ -61,6 +68,16 @@ export const actions = {
     .catch((err) => {
       commit('setAllPostEmpty');
       console.log(err);
+      return false;
+    });
+  },
+  fetchById({ commit }, postId) {
+    return this.$axios.$get(`/posts/${postId}`)
+    .then((response) => {
+      commit('setOne', response.post);
+      return true;
+    })
+    .catch((err) => {
       return false;
     });
   },

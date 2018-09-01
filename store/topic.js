@@ -1,6 +1,7 @@
 export const state = () => ({
   topic: {},
-  topics: []
+  topics: [],
+  deletedTopics: [],
 })
 
 export const getters = {
@@ -10,6 +11,9 @@ export const getters = {
   getTopic: (state) => {
     return state.topic;
   },
+  getDeleted: (state) => {
+    return state.deletedTopics;
+  }
 }
 
 export const mutations = {
@@ -18,6 +22,9 @@ export const mutations = {
   },
   setTopic: (state, topic) => {
     state.topic = topic;
+  },
+  setDeleted: (state, topics) => {
+    state.deletedTopics = topics;
   },
   updateTopic: (state, topic) => {
     let index = null;
@@ -54,6 +61,17 @@ export const actions = {
     return this.$axios.$get(`/topics/${topicUrl}`)
     .then((response) => {
       commit('setTopic', response.topic);
+      return true;
+    })
+    .catch((err) => {
+      console.log(err);
+      return false;
+    });
+  },
+  fetchDeleted({ commit }) {
+    return this.$axios.$get('/topics?deleted=true')
+    .then((response) => {
+      commit('setDeleted', response.topics);
       return true;
     })
     .catch((err) => {

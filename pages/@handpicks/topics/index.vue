@@ -2,6 +2,9 @@
   <div>
     <add-topic-form />
     <topic-list :topics="topics" />
+    <topic-list 
+      :topics="deletedTopics"
+      :type="'deleted'" />
   </div>
 </template>
 
@@ -18,10 +21,14 @@ import AddTopicForm from '@/components/Admin/AddTopicForm';
     computed: {
       topics() {
         return this.$store.getters['topic/getAllTopic'];
-      }      
+      },
+      deletedTopics() {
+        return this.$store.getters['topic/getDeleted'];
+      }
     },
     beforeCreate() {
       this.$store.dispatch('topic/fetchAllTopic');
+      this.$store.dispatch('topic/fetchDeleted');
     }
   }
 </script>

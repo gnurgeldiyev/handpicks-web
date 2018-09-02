@@ -9,13 +9,13 @@ export const getters = {
   getOne: (state) => {
     return state.post;
   },
-  getAllPost: (state) => {
+  getAll: (state) => {
     return state.posts;
   },
-  getTodayPost: (state) => {
+  getToday: (state) => {
     return state.postsToday;
   },
-  getUpcomingPost: (state) => {
+  getUpcoming: (state) => {
     return state.postsUpcoming;
   },
 }
@@ -24,54 +24,93 @@ export const mutations = {
   setOne: (state, post) => {
     state.post = post;
   },
-  setAllPost: (state, posts) => {
+  setAll: (state, posts) => {
     state.posts = posts;
   },
-  setTodayPost: (state, posts) => {
+  setToday: (state, posts) => {
     state.postsToday = posts;
   },
-  setUpcomingPost: (state, posts) => {
+  setUpcoming: (state, posts) => {
     state.postsUpcoming = posts;
   },
-  setAllPostEmpty: (state) => {
+  clearAll: (state) => {
     state.posts = [];
   },
-  setUpcomingPostEmpty: (state) => {
+  clearUpcoming: (state) => {
     state.postsUpcoming = [];
   },
-  updatePost: (state, post) => {
-    let index = null;
-    state.posts.forEach((item, i) => {
-      index = item.id === post.id ? i : null;
-    });
-    state.posts.splice(index, 1, post);
+  addNew: (state, post) => {
+    const today = new Date();
+    if (post.published > today) {
+      let postsUpcoming = [];
+      if (state.postsUpcoming) {
+        postsUpcoming = [...state.postsUpcoming, post];
+      } else {
+        postsUpcoming.push(post);
+      }
+      state.postsUpcoming = postsUpcoming;
+    } else {
+      let posts = [];
+      if (state.posts) {
+        posts = [...state.posts, post];
+      } else {
+        posts.push(post);
+      }
+      state.posts = posts;
+    }
   },
-  deletePost: (state, postId) => {
-    let postIndex;
-    state.posts.map((post, index) => {
-      if (post.id === postId) {
-        postIndex = index;
+  update: (state, post) => {
+    const today = new Date();
+    if (post.published > today) {
+      let index;
+      state.postsUpcoming.forEach((item, i) => {
+        index = item.id === post.id ? i : null;
+      });
+      state.postsUpcoming.splice(index, 1, post);
+    } else {
+      let index;
+      state.posts.forEach((item, i) => {
+        index = item.id === post.id ? i : null;
+      });
+      state.posts.splice(index, 1, post);
+    }
+  },
+  delete: (state, postId) => {
+    let index;
+    state.posts.map((item, i) => {
+      if (item.id === postId) {
+        index = i;
       }
       return true;
     });
-    state.posts.splice(postIndex, 1);
+    state.posts.splice(index, 1);
+  },
+  deleteUpcoming: (state, postId) => {
+    let index;
+    state.postsUpcoming.map((item, i) => {
+      if (item.id === postId) {
+        index = i;
+      }
+      return true;
+    });
+    state.postsUpcoming.splice(index, 1);
   }
 }
 
 export const actions = {
-  fetchLatestPost({ commit }) {
+  fetchLatest({ commit }) {
     return this.$axios.$get('/posts?date=latest')
     .then((response) => {
-      commit('setAllPost', response.posts);
+      commit('setAll', response.posts);
       return true;
     })
     .catch((err) => {
-      commit('setAllPostEmpty');
+      commit('clearAll');
       console.log(err);
       return false;
     });
   },
-  fetchById({ commit }, postId) {
+  fetchOne({ commit }, postId) {
     return this.$axios.$get(`/posts/${postId}`)
     .then((response) => {
       commit('setOne', response.post);
@@ -81,38 +120,38 @@ export const actions = {
       return false;
     });
   },
-  fetchPostByTopic({ commit }, topicUrl) {
+  fetchByTopic({ commit }, topicUrl) {
     return this.$axios.$get(`/posts/topics/${topicUrl}`)
     .then((response) => {
-      commit('setAllPost', response.posts);
+      commit('setAll', response.posts);
       return true;
     })
     .catch((err) => {
-      commit('setAllPostEmpty');
+      commit('clearAll');
       console.log(err);
       return false;
     });
   },
-  fetchLatestPostByTopic({ commit }, topicUrl) {
+  fetchLatestByTopic({ commit }, topicUrl) {
     return this.$axios.$get(`/posts/topics/${topicUrl}/latest`)
     .then((response) => {
-      commit('setAllPost', response.posts);
+      commit('setAll', response.posts);
       return true;
     })
     .catch((err) => {
-      commit('setAllPostEmpty');
+      commit('clearAll');
       console.log(err);
       return false;
     });
   },
-  fetchTodayPost({ commit }) {
+  fetchToday({ commit }) {
     const day = new Date().getUTCDate();
     const month = (new Date().getUTCMonth() + 1) < 10 ? '0' + (new Date().getUTCMonth() + 1) : (new Date().getUTCMonth() + 1);
     const year = new Date().getUTCFullYear();
     const today = year + '-' + month + '-' + day;
     return this.$axios.$get(`/posts?date=${today}`)
     .then((response) => {
-      commit('setTodayPost', response.posts);
+      commit('setToday', response.posts);
       return true;
     })
     .catch((err) => {
@@ -120,23 +159,22 @@ export const actions = {
       return false;
     });
   },
-  fetchUpcomingPost({ commit }, topicUrl) {
+  fetchUpcoming({ commit }, topicUrl) {
     return this.$axios.$get(`/posts/topics/${topicUrl}/upcoming`)
     .then((response) => {
-      commit('setUpcomingPost', response.posts);
+      commit('setUpcoming', response.posts);
       return true;
     })
     .catch((err) => {
-      commit('setUpcomingPostEmpty');
+      commit('clearUpcoming');
       console.log(err);
       return false;
     });
   },
-  addNewPost({ commit, state }, post) {
+  addNew({ commit }, post) {
     return this.$axios.$post('/posts', { post })
     .then((response) => {
-      let posts = [...state.posts, response.post];
-      commit('setAllPost', posts);
+      commit('addNew', response.post);
       return true;
     })
     .catch((err) => {
@@ -144,11 +182,10 @@ export const actions = {
       return false;
     });
   },
-  editPost({ commit }, post) {
-    console.log(post);
+  edit({ commit }, post) {
     return this.$axios.$put(`/posts/${post.id}`, { post })
     .then((response) => {
-      console.log(response.post);
+      commit('update', response.post);
       return true;
     })
     .catch((err) => {
@@ -156,10 +193,21 @@ export const actions = {
       return false;
     });
   },
-  deletePost({ commit }, postId) {
+  delete({ commit }, postId) {
     return this.$axios.$delete(`/posts/${postId}`)
     .then(() => {
-      commit('deletePost', postId);
+      commit('delete', postId);
+      return true;
+    })
+    .catch((err) => {
+      console.log(err);
+      return false;
+    });
+  },
+  deleteUpcoming({ commit }, postId) {
+    return this.$axios.$delete(`/posts/${postId}`)
+    .then(() => {
+      commit('deleteUpcoming', postId);
       return true;
     })
     .catch((err) => {

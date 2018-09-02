@@ -5,10 +5,10 @@ export const state = () => ({
 })
 
 export const getters = {
-  getAllTopic: (state) => {
+  getAll: (state) => {
     return state.topics;
   },
-  getTopic: (state) => {
+  getOne: (state) => {
     return state.topic;
   },
   getDeleted: (state) => {
@@ -17,39 +17,48 @@ export const getters = {
 }
 
 export const mutations = {
-  setAllTopic: (state, topics) => {
+  setAll: (state, topics) => {
     state.topics = topics;
   },
-  setTopic: (state, topic) => {
+  setOne: (state, topic) => {
     state.topic = topic;
   },
   setDeleted: (state, topics) => {
     state.deletedTopics = topics;
   },
-  updateTopic: (state, topic) => {
-    let index = null;
+  addNew: (state, topic) => {
+    let topics = [];
+    if (state.topics) {
+      topics = [...state.topics, topic];
+    } else {
+      topics.push(topic);
+    }
+    state.topics = topics;
+  },
+  update: (state, topic) => {
+    let index;
     state.topics.forEach((item, i) => {
       index = item.id === topic.id ? i : null;
     });
     state.topics.splice(index, 1, topic);
   },
-  deleteTopic: (state, topicId) => {
-    let topicIndex;
-    state.topics.map((topic, index) => {
-      if (topic.id === topicId) {
-        topicIndex = index;
+  delete: (state, topicId) => {
+    let index;
+    state.topics.map((item, i) => {
+      if (item.id === topicId) {
+        index = i;
       }
       return true;
     });
-    state.topics.splice(topicIndex, 1);
+    state.topics.splice(index, 1);
   }
 }
 
 export const actions = {
-  fetchAllTopic({ commit }) {
+  fetchAll({ commit }) {
     return this.$axios.$get('/topics')
     .then((response) => {
-      commit('setAllTopic', response.topics);
+      commit('setAll', response.topics);
       return true;
     })
     .catch((err) => {
@@ -57,10 +66,10 @@ export const actions = {
       return false;
     });
   },
-  fetchTopicByUrl({ commit }, topicUrl) {
+  fetchByUrl({ commit }, topicUrl) {
     return this.$axios.$get(`/topics/${topicUrl}`)
     .then((response) => {
-      commit('setTopic', response.topic);
+      commit('setOne', response.topic);
       return true;
     })
     .catch((err) => {
@@ -79,11 +88,10 @@ export const actions = {
       return false;
     });
   },
-  addNewTopic({ commit, state }, topic) {
+  addNew({ commit }, topic) {
     return this.$axios.$post('/topics', { topic })
     .then((response) => {
-      let topics = [...state.topics, response.topic];
-      commit('setAllTopic', topics);
+      commit('addNew', response.topic);
       return true;
     })
     .catch((err) => {
@@ -91,10 +99,10 @@ export const actions = {
       return false;
     });
   },
-  editTopic({ commit }, topic) {
+  edit({ commit }, topic) {
     return this.$axios.$put(`/topics/${topic.id}`, { topic })
     .then((response) => {
-      commit('updateTopic', response.topic);
+      commit('update', response.topic);
       return true;
     })
     .catch((err) => {
@@ -102,10 +110,10 @@ export const actions = {
       return false;
     });
   },
-  deleteTopic({ commit }, topicId) {
+  delete({ commit }, topicId) {
     return this.$axios.$delete(`/topics/${topicId}`)
     .then(() => {
-      commit('deleteTopic', topicId);
+      commit('delete', topicId);
       return true;
     })
     .catch((err) => {

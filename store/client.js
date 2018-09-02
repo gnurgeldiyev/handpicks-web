@@ -4,38 +4,47 @@ export const state = () => ({
 })
 
 export const getters = {
-  getClient: (state) => {
+  getOne: (state) => {
     return state.client;
   },
-  getAllClient: (state) => {
+  getAll: (state) => {
     return state.clients;
   },
 }
 
 export const mutations = {
-  setClient: (state, client) => {
+  setOne: (state, client) => {
     state.client = client;
   },
-  setAllClient: (state, clients) => {
+  setAll: (state, clients) => {
     state.clients = clients;
   },
-  deleteClient: (state, clientId) => {
-    let clientIndex;
-    state.clients.map((client, index) => {
-      if (client.id === clientId) {
-        clientIndex = index;
+  addNew: (state, client) => {
+    let clients = [];
+    if (state.clients) {
+      clients = [...state.clients, client];
+    } else {
+      clients.push(client);
+    }
+    state.clients = clients;
+  },
+  delete: (state, clientId) => {
+    let index;
+    state.clients.map((item, i) => {
+      if (item.id === clientId) {
+        index = i;
       }
       return true;
     });
-    state.clients.splice(clientIndex, 1);
+    state.clients.splice(index, 1);
   }
 }
 
 export const actions = {
-  fetchAllClient({ commit }) {
+  fetchAll({ commit }) {
     return this.$axios.$get('/clients')
     .then((response) => {
-      commit('setAllClient', response.clients);
+      commit('setAll', response.clients);
       return true;
     })
     .catch((err) => {
@@ -43,10 +52,21 @@ export const actions = {
       return false;
     });
   },
-  fetchClientKey({ commit }, clientId) {
+  fetchOne({ commit }, clientId) {
+    return this.$axios.$get(`/clients/${clientId}/`)
+    .then((response) => {
+      commit('setOne', response.client);
+      return true;
+    })
+    .catch((err) => {
+      console.log(err);
+      return false;
+    });
+  },
+  fetchKey({ commit }, clientId) {
     return this.$axios.$get(`/clients/${clientId}/keys`)
     .then((response) => {
-      commit('setClient', response.client);
+      commit('setOne', response.client);
       return true;
     })
     .catch((err) => {
@@ -54,11 +74,10 @@ export const actions = {
       return false;
     });
   },
-  addNewClient({ commit, state }, client) {
+  addNew({ commit }, client) {
     return this.$axios.$post('/clients', { client })
     .then((response) => {
-      let clients = [...state.clients, response.client];
-      commit('setAllClient', clients);
+      commit('addNew', response.client);
       return true;
     })
     .catch((err) => {
@@ -66,10 +85,10 @@ export const actions = {
       return false;
     });
   },
-  deleteClient({ commit }, clientId) {
+  delete({ commit }, clientId) {
     return this.$axios.$delete(`/clients/${clientId}`)
     .then(() => {
-      commit('deleteClient', clientId);
+      commit('delete', clientId);
       return true;
     })
     .catch((err) => {

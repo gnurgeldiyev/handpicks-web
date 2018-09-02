@@ -23,14 +23,19 @@
       <span>Users</span>
     </el-menu-item>
     <el-menu-item
-      v-if="manager.role === 'admin'"
       index="4"
+      @click="goTo('/@handpicks/messages')">
+      <span>Messages</span>
+    </el-menu-item>
+    <el-menu-item
+      v-if="manager.role === 'admin'"
+      index="5"
       @click="goTo('/@handpicks/managers')">
       <span>Managers</span>
     </el-menu-item>
     <el-menu-item
       v-if="manager.role === 'admin'"
-      index="5"
+      index="6"
       @click="goTo('/@handpicks/clients')">
       <span>API Clients</span>
     </el-menu-item>

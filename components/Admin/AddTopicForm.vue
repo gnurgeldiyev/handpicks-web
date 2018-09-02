@@ -65,13 +65,13 @@
     },
     methods: {
       submitForm(formName) {
-        this.$refs[formName].validate( async (valid) => {
+        this.$refs[formName].validate(async (valid) => {
           if (valid) {     
             let topic = {
               title: this.topic.title,
               description: this.topic.description
             }
-            const result = await this.$store.dispatch('topic/addNewTopic', topic);
+            const result = await this.$store.dispatch('topic/addNew', topic);
             if (!result) {
               this.$message({
                 type: 'error',

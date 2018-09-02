@@ -34,7 +34,7 @@
   export default {
     computed: {
       manager() {
-        return this.$store.getters['manager/getManager'];
+        return this.$store.getters['manager/getOne'];
       }
     },
     methods: {
@@ -43,7 +43,7 @@
           id: managerId,
           token: managerToken
         }
-        const result = await this.$store.dispatch('manager/logoutManager', manager);
+        const result = await this.$store.dispatch('manager/logout', manager);
         if (!result) {
           this.$message({
             message: 'An error occurred.',

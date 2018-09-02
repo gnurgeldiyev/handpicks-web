@@ -111,7 +111,7 @@
               role: this.manager.role,
               password: this.manager.password,
             }
-            const result = await this.$store.dispatch('manager/addNewManager', manager);
+            const result = await this.$store.dispatch('manager/addNew', manager);
             if (!result) {
               this.$message({
                 type: 'error',

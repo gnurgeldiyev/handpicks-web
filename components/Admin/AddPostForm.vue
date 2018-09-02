@@ -142,7 +142,7 @@
     },
     computed: {
       topics() {
-        return this.$store.getters['topic/getAllTopic'];
+        return this.$store.getters['topic/getAll'];
       }
     },
     methods: {
@@ -184,7 +184,7 @@
               tags: this.post.tags,
               published: this.post.date.setHours(3)
             }
-            const result = await this.$store.dispatch('post/addNewPost', post);
+            const result = await this.$store.dispatch('post/addNew', post);
             if (!result) {
               this.$message({
                 type: 'error',

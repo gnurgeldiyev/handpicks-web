@@ -20,14 +20,14 @@ import AddTopicForm from '@/components/Admin/AddTopicForm';
     },
     computed: {
       topics() {
-        return this.$store.getters['topic/getAllTopic'];
+        return this.$store.getters['topic/getAll'];
       },
       deletedTopics() {
         return this.$store.getters['topic/getDeleted'];
       }
     },
     beforeCreate() {
-      this.$store.dispatch('topic/fetchAllTopic');
+      this.$store.dispatch('topic/fetchAll');
       this.$store.dispatch('topic/fetchDeleted');
     }
   }

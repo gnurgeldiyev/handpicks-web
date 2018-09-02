@@ -20,14 +20,14 @@ import AddManagerForm from '@/components/Admin/AddManagerForm';
     },
     computed: {
       managers() {
-        return this.$store.getters['manager/getAllManager'];
+        return this.$store.getters['manager/getAll'];
       },
       deletedManagers() {
         return this.$store.getters['manager/getDeleted'];
       }
     },
     beforeCreate() {
-      this.$store.dispatch('manager/fetchAllManager');
+      this.$store.dispatch('manager/fetchAll');
       this.$store.dispatch('manager/fetchDeleted');
     }
   }

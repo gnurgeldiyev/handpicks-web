@@ -21,11 +21,13 @@ export default {
   },
   computed: {
     posts() {
-      return this.$store.getters['post/getAllPost']
+      return this.$store.getters['post/getAll']
     },
   },
   beforeCreate() {
-    this.$store.dispatch('post/fetchLatestPost');
+    if (!this.$store.getters['post/getAll'].length) {
+      this.$store.dispatch('post/fetchLatest');
+    }
   },
   methods: {
     formatDate(date) {

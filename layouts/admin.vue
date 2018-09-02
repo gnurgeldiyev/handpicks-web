@@ -28,13 +28,13 @@ export default {
   },
   computed: {
     topics() {
-      return this.$store.getters['topic/getAllTopic'];
+      return this.$store.getters['topic/getAll'];
     }
   },
   beforeCreate() {
-    this.$store.dispatch('topic/fetchAllTopic');
+    this.$store.dispatch('topic/fetchAll');
     const managerId = this.$cookies.get('id');
-    this.$store.dispatch('manager/fetchManagerById', managerId);
+    this.$store.dispatch('manager/fetchOne', managerId);
   },
 }
 </script>

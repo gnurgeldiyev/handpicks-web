@@ -57,7 +57,7 @@
             let client = {
               name: this.client.name
             }
-            const result = await this.$store.dispatch('client/addNewClient', client);
+            const result = await this.$store.dispatch('client/addNew', client);
             if (!result) {
               this.$message({
                 type: 'error',

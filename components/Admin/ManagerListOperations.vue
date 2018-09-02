@@ -113,7 +113,7 @@
               role: this.currentManager.role,
               password: this.currentManager.password,
             }
-            const result = await this.$store.dispatch('manager/editManager', manager);
+            const result = await this.$store.dispatch('manager/edit', manager);
             if (!result) {
               this.$message({
                 message: 'An error occurred.',
@@ -142,7 +142,7 @@
           cancelButtonText: 'Cancel',
           type: 'warning',
         }).then(async () => {
-          const result = await this.$store.dispatch('manager/deleteManager', id);
+          const result = await this.$store.dispatch('manager/delete', id);
           if (!result) {
             this.$message({
               type: 'error',

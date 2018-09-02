@@ -73,10 +73,10 @@ import ClientListOperations from '@/components/Admin/ClientListOperations';
         return day + '.' + month + '.' + year;
       },
       fetchKey(clientId) {
-        this.$store.dispatch('client/fetchClientKey', clientId);
+        this.$store.dispatch('client/fetchKey', clientId);
       },
       getRequestHeader(clientId) {
-        const client = this.$store.getters['client/getClient'];
+        const client = this.$store.getters['client/getOne'];
         return `name=${client.name}, apiKey=${client.apiKey}`;
       }
     }

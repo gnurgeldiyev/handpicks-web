@@ -21,7 +21,3 @@ import NotFoundView from '@/components/Client/NotFoundView';
     },
   }
 </script>
-
-<style scoped>
-
-</style>

@@ -17,11 +17,11 @@ import AddClientForm from '@/components/Admin/AddClientForm';
     },
     computed: {
       clients() {
-        return this.$store.getters['client/getAllClient'];
+        return this.$store.getters['client/getAll'];
       }      
     },
     beforeCreate() {
-      this.$store.dispatch('client/fetchAllClient');
+      this.$store.dispatch('client/fetchAll');
     }
   }
 </script>

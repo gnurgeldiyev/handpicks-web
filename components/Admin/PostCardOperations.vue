@@ -143,10 +143,10 @@
     },
     computed: {
       topics() {
-        return this.$store.getters['topic/getAllTopic'];
+        return this.$store.getters['topic/getAll'];
       },
       manager() {
-        return this.$store.getters['manager/getManager'];
+        return this.$store.getters['manager/getOne'];
       }
     },
     methods: {
@@ -172,7 +172,7 @@
               tags: this.currentPost.tags,
               published: this.currentPost.date.setHours(3)
             }
-            const result = await this.$store.dispatch('post/editPost', post);
+            const result = await this.$store.dispatch('post/edit', post);
             if (!result) {
               this.$message({
                 message: 'An error occurred.',
@@ -201,7 +201,7 @@
           cancelButtonText: 'Cancel',
           type: 'warning',
         }).then(async () => {
-          const result = await this.$store.dispatch('post/deletePost', postId);
+          const result = await this.$store.dispatch('post/delete', postId);
           if (!result) {
             this.$message({
               type: 'error',

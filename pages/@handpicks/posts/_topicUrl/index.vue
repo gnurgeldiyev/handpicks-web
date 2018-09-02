@@ -34,24 +34,24 @@ import AddPostForm from '@/components/Admin/AddPostForm';
     },
     computed: {
       posts() {
-        if (this.$store.getters['post/getAllPost']) {
-          return this.$store.getters['post/getAllPost']
+        if (this.$store.getters['post/getAll']) {
+          return this.$store.getters['post/getAll']
         }
       },
       postsUpcoming() {
-        if (this.$store.getters['post/getUpcomingPost']) {
-          return this.$store.getters['post/getUpcomingPost']
+        if (this.$store.getters['post/getUpcoming']) {
+          return this.$store.getters['post/getUpcoming']
         }
       },
       topic() {
-        return this.$store.getters['topic/getTopic'];
+        return this.$store.getters['topic/getOne'];
       }
     },
     beforeCreate() {
       const topicUrl = this.$route.params.topicUrl;
-      this.$store.dispatch('topic/fetchTopicByUrl', topicUrl);
-      this.$store.dispatch('post/fetchPostByTopic', topicUrl);
-      this.$store.dispatch('post/fetchUpcomingPost', topicUrl);
+      this.$store.dispatch('topic/fetchByUrl', topicUrl);
+      this.$store.dispatch('post/fetchByTopic', topicUrl);
+      this.$store.dispatch('post/fetchUpcoming', topicUrl);
     },
   }
 </script>

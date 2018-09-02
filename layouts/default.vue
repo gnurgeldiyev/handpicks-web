@@ -23,11 +23,13 @@ export default {
   },
   computed: {
     topics() {
-      return this.$store.getters['topic/getAllTopic'];
+      return this.$store.getters['topic/getAll'];
     }
   },
   beforeCreate() {
-    this.$store.dispatch('topic/fetchAllTopic');
+    if (!this.$store.getters['topic/getAll'].length) {
+      this.$store.dispatch('topic/fetchAll');
+    }
   },
   mounted () {
     const windowHeight = window.innerHeight;

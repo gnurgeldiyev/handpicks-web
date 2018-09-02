@@ -75,7 +75,7 @@
     },
     computed: {
       manager() {
-        return this.$store.getters['manager/getManager'];
+        return this.$store.getters['manager/getOne'];
       }
     },
     methods: {
@@ -87,7 +87,7 @@
               title: this.currentTopic.title,
               description: this.currentTopic.description
             }
-            const result = await this.$store.dispatch('topic/editTopic', topic);
+            const result = await this.$store.dispatch('topic/edit', topic);
             if (!result) {
               this.$message({
                 message: 'An error occurred.',
@@ -116,7 +116,7 @@
           cancelButtonText: 'Cancel',
           type: 'warning',
         }).then(async () => {
-          const result = await this.$store.dispatch('topic/deleteTopic', id);
+          const result = await this.$store.dispatch('topic/delete', id);
           if (!result) {
             this.$message({
               type: 'error',

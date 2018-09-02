@@ -103,15 +103,21 @@
     },
     methods: {
       submitForm(formName) {
-        this.$refs[formName].validate( (valid) => {
+        this.$refs[formName].validate(async (valid) => {
           if (valid) {     
-
             let feedback = {
               name: this.feedback.name,
               email: this.feedback.email ? this.feedback.email : null,
               message: this.feedback.message, 
             }
-            console.log(feedback);
+            const result = await this.$store.dispatch('message/addNew', feedback);
+            if (!result) {
+              this.$message({
+                message: 'Oops, An Error Occurred 🙁',
+                type: 'error'
+              });
+              return false;
+            }
             this.$refs[formName].resetFields();
             this.sendFeedbackDialogVisible = false;
             this.$message({

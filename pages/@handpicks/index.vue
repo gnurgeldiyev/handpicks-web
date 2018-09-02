@@ -35,18 +35,18 @@ import UserReportCard from '@/components/Admin/UserReportCard';
     },
     computed: {
       postsToday() {
-        if (this.$store.getters['post/getAllPost']) {
-          return this.$store.getters['post/getTodayPost']
+        if (this.$store.getters['post/getAll']) {
+          return this.$store.getters['post/getToday']
         }
       },
       usersTotal() {
-        const totalUser = this.$store.getters['user/getUsersTotal'];
+        const totalUser = this.$store.getters['user/getTotal'];
         return [totalUser];
       }
     },
     beforeCreate() {
-      this.$store.dispatch('post/fetchTodayPost');
-      this.$store.dispatch('user/fetchUsersTotal');
+      this.$store.dispatch('post/fetchToday');
+      this.$store.dispatch('user/fetchTotal');
     }
   }
 </script>

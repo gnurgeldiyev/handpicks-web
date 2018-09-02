@@ -67,7 +67,7 @@ import MainFooter from '@/components/Navigation/MainFooter';
         this.$router.push('/@handpicks')
       }
     },
-    mounted () {
+    mounted() {
       const windowHeight = window.innerHeight;
       const contentHeight= this.$refs.content.clientHeight;
       if (windowHeight < (contentHeight + 32)) {
@@ -84,7 +84,7 @@ import MainFooter from '@/components/Navigation/MainFooter';
               email: this.manager.email,
               password: this.manager.password
             }
-            const result = await this.$store.dispatch('manager/loginManager', manager);
+            const result = await this.$store.dispatch('manager/login', manager);
             if (!result) {
               this.$refs[formName].resetFields();
               this.$message({

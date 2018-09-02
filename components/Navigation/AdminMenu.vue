@@ -47,7 +47,7 @@
     },
     computed: {
       manager() {
-        return this.$store.getters['manager/getManager'];
+        return this.$store.getters['manager/getOne'];
       }
     },
     methods: {

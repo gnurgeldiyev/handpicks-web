@@ -20,7 +20,7 @@ export default {
   },
   beforeCreate() {
     const postId = this.$route.params.postId;
-    this.$store.dispatch('post/fetchById', postId);
+    this.$store.dispatch('post/fetchOne', postId);
   },
 }
 </script>

@@ -23,7 +23,7 @@
           cancelButtonText: 'Cancel',
           type: 'warning',
         }).then(async () => {
-          const result = await this.$store.dispatch('client/deleteClient', id);
+          const result = await this.$store.dispatch('client/delete', id);
           if (!result) {
             this.$message({
               type: 'error',

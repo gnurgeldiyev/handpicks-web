@@ -21,12 +21,12 @@ export default {
   },
   computed: {
     posts() {
-      return this.$store.getters['post/getAllPost']
+      return this.$store.getters['post/getAll']
     },
   },
   beforeCreate() {
     const topicUrl = this.$route.params.topicUrl;
-    this.$store.dispatch('post/fetchLatestPostByTopic', topicUrl);
+    this.$store.dispatch('post/fetchLatestByTopic', topicUrl);
   },
   methods: {
     formatDate(date) {

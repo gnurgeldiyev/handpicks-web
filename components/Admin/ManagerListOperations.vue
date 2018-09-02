@@ -3,12 +3,12 @@
     <el-button
       size="mini"
       style="margin-right: 8px;"
-      @click="editManagerDialogVisible = true">Edit</el-button>
+      @click="editDialogVisible = true">Edit</el-button>
 
     <el-dialog
       :lock-scroll="true"
       :top="'8vh'"
-      :visible.sync="editManagerDialogVisible"
+      :visible.sync="editDialogVisible"
       width="35%"
       title="Edit the Manager">
       <el-form 
@@ -58,7 +58,7 @@
       size="mini"
       style="margin-left: 8px;"
       type="danger"
-      @click="deleteManagerAlert(manager.id)">Delete</el-button>
+      @click="deleteAlert(manager.id)">Delete</el-button>
   </div>
 </template>
 
@@ -79,7 +79,7 @@
           role: this.manager.role,
           password: '',
         },
-        editManagerDialogVisible: false,
+        editDialogVisible: false,
         rules: {
           name: [
             { required: true, message: 'Please enter a manager name', trigger: 'blur' },
@@ -122,7 +122,7 @@
               return false;
             }
             this.$refs[formName].resetFields();
-            this.editManagerDialogVisible = false;
+            this.editDialogVisible = false;
             this.$message({
               message: 'Manager updated.',
               type: 'success'
@@ -132,11 +132,7 @@
           }
         });
       },
-      cancelForm(formName) {
-        this.$refs[formName].resetFields();
-        this.editManagerDialogVisible = false;
-      },
-      deleteManagerAlert(id) {
+      deleteAlert(id) {
         this.$confirm('This will permanently delete the manager. Continue?', 'Warning', {
           confirmButtonText: 'OK',
           cancelButtonText: 'Cancel',

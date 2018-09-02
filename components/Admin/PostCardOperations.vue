@@ -4,11 +4,11 @@
       class="a_card_body_operations_edit"
       type="text"
       icon="el-icon-edit"
-      @click="editPostDialogVisible = true"/>
+      @click="editDialogVisible = true"/>
     <el-dialog
       :lock-scroll="true"
       :top="'8vh'"
-      :visible.sync="editPostDialogVisible"
+      :visible.sync="editDialogVisible"
       width="35%"
       title="Edit the Post">
       <el-form 
@@ -137,7 +137,7 @@
             { type: 'date', required: true, message: 'Please pick a publication date', trigger: 'change' }
           ]
         },
-        editPostDialogVisible: false,
+        editDialogVisible: false,
         deletePopoverVisible: false,
       }
     },
@@ -181,7 +181,7 @@
               return false;
             }
             this.$refs[formName].resetFields();
-            this.editPostDialogVisible = false;
+            this.editDialogVisible = false;
             this.$message({
               message: 'Post updated.',
               type: 'success'
@@ -190,10 +190,6 @@
             return false;
           }
         });
-      },
-      cancelForm(formName) {
-        this.$refs[formName].resetFields();
-        this.editPostDialogVisible = false;
       },
       deletePost(postId) {
         this.$confirm('This will permanently delete the post. Continue?', 'Warning', {

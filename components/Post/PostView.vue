@@ -41,11 +41,6 @@
         required: true
       },
     },
-    data() {
-      return {
-        isPostViewDialogVisible: true,
-      }
-    },
     methods: {
       goToSource(url) {
         const windowWidth = window.innerWidth;

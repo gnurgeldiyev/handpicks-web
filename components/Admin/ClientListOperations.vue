@@ -4,7 +4,7 @@
       size="mini"
       style="margin-left: 8px;"
       type="danger"
-      @click="deleteClientAlert(client.id)">Delete</el-button>
+      @click="deleteAlert(client.id)">Delete</el-button>
   </div>
 </template>
 
@@ -17,7 +17,7 @@
       }
     },
     methods: {
-      deleteClientAlert(id) {
+      deleteAlert(id) {
         this.$confirm('This will permanently delete the API client. Continue?', 'Warning', {
           confirmButtonText: 'OK',
           cancelButtonText: 'Cancel',

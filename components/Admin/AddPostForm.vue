@@ -4,14 +4,14 @@
       class="floating-button"
       icon="el-icon-circle-plus-outline" 
       round
-      @click="addPostDialogVisible = true">
+      @click="addDialogVisible = true">
       New post
     </el-button>
 
     <el-dialog
       :lock-scroll="true"
       :top="'8vh'"
-      :visible.sync="addPostDialogVisible"
+      :visible.sync="addDialogVisible"
       width="35%"
       title="Add a New Post">
       <el-form 
@@ -137,7 +137,7 @@
             { type: 'date', required: true, message: 'Please pick a publication date', trigger: 'change' }
           ]
         },
-        addPostDialogVisible: false,
+        addDialogVisible: false,
       }
     },
     computed: {
@@ -193,7 +193,7 @@
               return false;
             }
             this.$refs[formName].resetFields();
-            this.addPostDialogVisible = false;
+            this.addDialogVisible = false;
             this.$message({
               message: 'Post added.',
               type: 'success'
@@ -202,10 +202,6 @@
             return false;
           }
         });
-      },
-      cancelForm(formName) {
-        this.$refs[formName].resetFields();
-        this.addPostDialogVisible = false;
       },
     },
   }

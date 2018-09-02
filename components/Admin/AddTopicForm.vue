@@ -4,14 +4,14 @@
       class="floating-button"
       icon="el-icon-circle-plus-outline" 
       round
-      @click="addTopicDialogVisible = true">
+      @click="addDialogVisible = true">
       New Topic
     </el-button>
 
     <el-dialog
       :lock-scroll="true"
       :top="'8vh'"
-      :visible.sync="addTopicDialogVisible"
+      :visible.sync="addDialogVisible"
       width="35%"
       title="Add a New Topic">
       <el-form 
@@ -60,7 +60,7 @@
             { max: 128, message: 'Length should be max 128 characters', trigger: 'blur' }
           ],
         },
-        addTopicDialogVisible: false,
+        addDialogVisible: false,
       }
     },
     methods: {
@@ -80,7 +80,7 @@
               return false;
             }
             this.$refs[formName].resetFields();
-            this.addTopicDialogVisible = false;
+            this.addDialogVisible = false;
             this.$message({
               type: 'success',
               message: 'Topic added.'
@@ -89,10 +89,6 @@
             return false;
           }
         });
-      },
-      cancelForm(formName) {
-        this.$refs[formName].resetFields();
-        this.addTopicDialogVisible = false;
       },
     },
   }

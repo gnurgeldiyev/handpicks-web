@@ -4,12 +4,12 @@
       :disabled="manager.role === 'admin' ? false : true"
       size="mini"
       style="margin-right: 8px;"
-      @click="editTopicDialogVisible = true">Edit</el-button>
+      @click="editDialogVisible = true">Edit</el-button>
 
     <el-dialog
       :lock-scroll="true"
       :top="'8vh'"
-      :visible.sync="editTopicDialogVisible"
+      :visible.sync="editDialogVisible"
       width="35%"
       title="Edit the Topic">
       <el-form 
@@ -42,7 +42,7 @@
       size="mini"
       style="margin-left: 8px;"
       type="danger"
-      @click="deleteTopicAlert(topic.id)">Delete</el-button>
+      @click="deleteAlert(topic.id)">Delete</el-button>
   </div>
 </template>
 
@@ -60,7 +60,7 @@
           title: this.topic.title,
           description: this.topic.description
         },
-        editTopicDialogVisible: false,
+        editDialogVisible: false,
         rules: {
           title: [
             { required: true, message: 'Please enter a topic title', trigger: 'blur' },
@@ -96,7 +96,7 @@
               return false;
             }
             this.$refs[formName].resetFields();
-            this.editTopicDialogVisible = false;
+            this.editDialogVisible = false;
             this.$message({
               message: 'Topic updated.',
               type: 'success'
@@ -106,11 +106,7 @@
           }
         });
       },
-      cancelForm(formName) {
-        this.$refs[formName].resetFields();
-        this.editTopicDialogVisible = false;
-      },
-      deleteTopicAlert(id) {
+      deleteAlert(id) {
         this.$confirm('This will permanently delete the topic. Continue?', 'Warning', {
           confirmButtonText: 'OK',
           cancelButtonText: 'Cancel',

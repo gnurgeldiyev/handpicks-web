@@ -4,14 +4,14 @@
       class="floating-button"
       icon="el-icon-circle-plus-outline" 
       round
-      @click="addClientDialogVisible = true">
+      @click="addDialogVisible = true">
       New Client
     </el-button>
 
     <el-dialog
       :lock-scroll="true"
       :top="'8vh'"
-      :visible.sync="addClientDialogVisible"
+      :visible.sync="addDialogVisible"
       width="35%"
       title="Add a New API Client">
       <el-form 
@@ -47,7 +47,7 @@
             { max: 64, message: 'Length should be max 64 characters', trigger: 'blur' }
           ],
         },
-        addClientDialogVisible: false,
+        addDialogVisible: false,
       }
     },
     methods: {
@@ -66,7 +66,7 @@
               return false;
             }
             this.$refs[formName].resetFields();
-            this.addClientDialogVisible = false;
+            this.addDialogVisible = false;
             this.$message({
               message: 'Client added.',
               type: 'success'
@@ -75,10 +75,6 @@
             return false;
           }
         });
-      },
-      cancelForm(formName) {
-        this.$refs[formName].resetFields();
-        this.addClientDialogVisible = false;
       },
     },
   }

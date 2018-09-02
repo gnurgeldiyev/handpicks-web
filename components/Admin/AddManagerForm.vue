@@ -4,14 +4,14 @@
       class="floating-button"
       icon="el-icon-circle-plus-outline" 
       round
-      @click="addManagerDialogVisible = true">
+      @click="addDialogVisible = true">
       New Manager
     </el-button>
 
     <el-dialog
       :lock-scroll="true"
       :top="'8vh'"
-      :visible.sync="addManagerDialogVisible"
+      :visible.sync="addDialogVisible"
       width="35%"
       title="Add a New Manager">
       <el-form 
@@ -97,7 +97,7 @@
             { min: 6, message: 'Length should be min 6 characters', trigger: 'blur' }
           ],
         },
-        addManagerDialogVisible: false,
+        addDialogVisible: false,
       }
     },
     methods: {
@@ -120,7 +120,7 @@
               return false;
             }
             this.$refs[formName].resetFields();
-            this.addManagerDialogVisible = false;
+            this.addDialogVisible = false;
             this.$message({
               message: 'Manager added.',
               type: 'success'
@@ -129,10 +129,6 @@
             return false;
           }
         });
-      },
-      cancelForm(formName) {
-        this.$refs[formName].resetFields();
-        this.addManagerDialogVisible = false;
       },
     },
   }

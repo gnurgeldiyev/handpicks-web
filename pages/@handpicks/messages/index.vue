@@ -11,6 +11,11 @@ import MessageList from '@/components/Admin/MessageList';
     components: {
       'message-list': MessageList,
     },
+    head() {
+      return {
+        title: 'Editor panel: Messages',
+      }
+    },
     computed: {
       messages() {
         return this.$store.getters['message/getAll'];

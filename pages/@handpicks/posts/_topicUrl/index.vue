@@ -32,6 +32,11 @@ import AddPostForm from '@/components/Admin/AddPostForm';
       'post-card': PostCard,
       'add-post-form': AddPostForm,
     },
+    head() {
+      return {
+        title: `Editor panel: Posts on ${this.topic.title}`,
+      }
+    },
     computed: {
       posts() {
         if (this.$store.getters['post/getAll']) {

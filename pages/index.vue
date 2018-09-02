@@ -19,6 +19,11 @@ export default {
   components: {
     'post-card': PostCard,
   },
+  head() {
+    return {
+      title: 'Daily dose, handpicked art stories',
+    }
+  },
   computed: {
     posts() {
       return this.$store.getters['post/getAll']

@@ -18,6 +18,11 @@ import AddTopicForm from '@/components/Admin/AddTopicForm';
       'add-topic-form': AddTopicForm,
       'topic-list': TopicList,
     },
+    head() {
+      return {
+        title: 'Editor panel: Topics',
+      }
+    },
     computed: {
       topics() {
         return this.$store.getters['topic/getAll'];

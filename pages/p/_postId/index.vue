@@ -13,6 +13,23 @@ export default {
   components: {
     'post-view': PostView,
   },
+  head() {
+    const post = this.post;
+    if (post.topic) {
+      return {
+        title: `A handpicked story on the ${post.topic.title}`,
+        meta: [
+          { hid: 'description', name: 'description', content: `A handpicked story on the ${post.topic.title}` }
+        ]
+      }
+    }
+    return {
+      title: `A handpicked art story`,
+      meta: [
+        { hid: 'description', name: 'description', content: `A handpicked art story` }
+      ]
+    }
+  },
   computed: {
     post() {
       return this.$store.getters['post/getOne'];

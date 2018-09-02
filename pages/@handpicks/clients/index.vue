@@ -15,6 +15,11 @@ import AddClientForm from '@/components/Admin/AddClientForm';
       'client-list': ClientList,
       'add-client-form': AddClientForm,
     },
+    head() {
+      return {
+        title: 'Editor panel: Clients',
+      }
+    },
     computed: {
       clients() {
         return this.$store.getters['client/getAll'];

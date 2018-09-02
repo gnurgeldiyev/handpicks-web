@@ -18,6 +18,11 @@ import AddManagerForm from '@/components/Admin/AddManagerForm';
       'manager-list': ManagerList,
       'add-manager-form': AddManagerForm,
     },
+    head() {
+      return {
+        title: 'Editor panel: Managers',
+      }
+    },
     computed: {
       managers() {
         return this.$store.getters['manager/getAll'];

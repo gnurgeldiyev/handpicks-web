@@ -19,15 +19,28 @@ export default {
   components: {
     'post-card': PostCard,
   },
+  head() {
+    const topic = this.topic;
+    return {
+      title: `Daily dose, handpicked stories on the ${topic.title}`,
+      meta: [
+        { hid: 'description', name: 'description', content: `Daily dose, handpicked stories on the ${topic.title}` }
+      ]
+    }
+  },
   computed: {
     posts() {
       return this.$store.getters['post/getAll']
     },
+    topic() {
+      return this.$store.getters['topic/getOne']
+    }
   },
   beforeCreate() {
     this.$store.dispatch('post/clearAll');
     const topicUrl = this.$route.params.topicUrl;
     this.$store.dispatch('post/fetchLatestByTopic', topicUrl);
+    this.$store.dispatch('topic/fetchByUrl', topicUrl);
   },
   methods: {
     formatDate(date) {

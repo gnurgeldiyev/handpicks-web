@@ -33,6 +33,11 @@ import UserReportCard from '@/components/Admin/UserReportCard';
       'post-card': PostCard,
       'user-report-card': UserReportCard,
     },
+    head() {
+      return {
+        title: 'Editor panel: Dashboard',
+      }
+    },
     computed: {
       postsToday() {
         if (this.$store.getters['post/getAll']) {

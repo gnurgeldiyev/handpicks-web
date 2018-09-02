@@ -29,6 +29,11 @@ import UserReportCard from '@/components/Admin/UserReportCard';
     components: {
       'user-report-card': UserReportCard,
     },
+    head() {
+      return {
+        title: 'Editor panel: Users',
+      }
+    },
     computed: {
       users7() {
         return this.$store.getters['user/get7'];

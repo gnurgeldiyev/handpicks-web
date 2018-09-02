@@ -44,6 +44,11 @@ import MainFooter from '@/components/Navigation/MainFooter';
     components: {
       'main-footer': MainFooter,
     },
+    head() {
+      return {
+        title: 'Editor panel: Login',
+      }
+    },
     data() {
       return {
         manager: {

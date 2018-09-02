@@ -25,6 +25,7 @@ export default {
     },
   },
   beforeCreate() {
+    this.$store.dispatch('post/clearAll');
     const topicUrl = this.$route.params.topicUrl;
     this.$store.dispatch('post/fetchLatestByTopic', topicUrl);
   },

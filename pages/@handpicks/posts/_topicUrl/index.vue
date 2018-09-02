@@ -48,6 +48,8 @@ import AddPostForm from '@/components/Admin/AddPostForm';
       }
     },
     beforeCreate() {
+      this.$store.dispatch('post/clearAll');
+      this.$store.dispatch('post/clearUpcoming');
       const topicUrl = this.$route.params.topicUrl;
       this.$store.dispatch('topic/fetchByUrl', topicUrl);
       this.$store.dispatch('post/fetchByTopic', topicUrl);

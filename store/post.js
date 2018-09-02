@@ -171,6 +171,12 @@ export const actions = {
       return false;
     });
   },
+  clearAll({ commit }) {
+    commit('clearAll');
+  },
+  clearUpcoming({ commit }) {
+    commit('clearUpcoming');
+  },
   addNew({ commit }, post) {
     return this.$axios.$post('/posts', { post })
     .then((response) => {
